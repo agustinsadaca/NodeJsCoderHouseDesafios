@@ -20,7 +20,9 @@ const fs = require('fs')
                     maxId = ++maxId
                     producto['id'] = maxId
                 }
-                listadoProductos.push(producto)
+                listadoProductos.push({'id':producto['id'],'producto':
+                {'title':producto.title,'price':producto.price,'thumbnail':producto.thumbnail }})
+                
                 fs.writeFile(
                     './productos.txt',
                     JSON.stringify(listadoProductos, null, 2),
@@ -52,9 +54,9 @@ const fs = require('fs')
                 })
                 return myObject
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {return {error : 'producto no encontrado'}})
             
-        return Object.keys(myObject).length === 0 ? null : myObject
+        return Object.keys(myObject).length === 0 ? {error : 'producto no encontrado'} : myObject
     }
 
     async getAll() {
@@ -98,7 +100,7 @@ const fs = require('fs')
     async deleteAll() {
         await fs.writeFile(
             './productos.txt',
-            '[]',
+            '',
             (error) => {
                 if (error) {
                     console.log(error)
@@ -106,6 +108,40 @@ const fs = require('fs')
                 }
             },
         )
+    }
+    async updateById(id,newObj){
+        let objUpdated
+        myObject = await fs.promises
+            .readFile('./productos.txt', 'utf-8')
+            .then((data) => {
+                const listadoProductos = JSON.parse(data)
+                listadoProductos.map((producto) => {
+                    producto['id'] == id ? (objUpdated = producto) : objUpdated
+                })
+                const {title,price,thumbnail} = newObj
+                const index = listadoProductos.indexOf(objUpdated)
+                title!=undefined ? objUpdated.producto.title = title : objUpdated
+                price!=undefined ? objUpdated.producto.price = price : objUpdated
+                thumbnail!=undefined ? objUpdated.producto.thumbnail = thumbnail : objUpdated
+                listadoProductos[index]=(objUpdated)
+                this.deleteAll()
+                return listadoProductos
+            })
+            .then((listadoProductos)=>{
+                fs.writeFile(
+                    './productos.txt',
+                    JSON.stringify(listadoProductos, null, 2),
+                    (error) => {
+                        if (error) {
+                            console.log(error)
+                            throw new Error('Error: ' + error.message)
+                        }
+                    },
+                )
+            })
+            .catch((error) => {return {error : 'producto no encontrado'}})
+            
+        return Object.keys(myObject).length === 0 ? {error : 'producto no encontrado'} : myObject
     }
 }
 
