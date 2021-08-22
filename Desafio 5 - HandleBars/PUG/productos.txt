@@ -20,15 +20,15 @@
     "producto": {
       "title": "regla",
       "price": 41,
-      "thumbnail": "http://1.bp.blogspot.com/-oliQTb5vfmM/Tg6A4u0AWNI/AAAAAAAAAAQ/E31V1mM7GR8/s1600/regla.png"
+      "thumbnail": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png"
     }
   },
   {
     "id": 4,
     "producto": {
-      "title": "qwe",
-      "price": "1313",
-      "thumbnail": "addddd"
+      "title": "2",
+      "price": "2",
+      "thumbnail": "2"
     }
   }
 ]
