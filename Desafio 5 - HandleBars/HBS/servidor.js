@@ -25,8 +25,11 @@ app.engine(
 	app.get('/productos',async (req, res) => {
 		const contenedor = new Contenedor();
 		const productos = await contenedor.getAll()
+		const lengthProd = productos.length!=0;
+		console.log(lengthProd);
 		res.render('productos', {
 			productos,
+			lengthProd,
 			layout: 'index'
 		})
 	})
