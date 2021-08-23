@@ -1,13 +1,14 @@
+
 head
   style
-    link(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")
-    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" crossorigin="anonymous")
-    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous")
-    link( type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa")
+    include ../views/styles.css
+  link(rel='stylesheet' ,href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' )
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css", crossorigin="anonymous")
+  link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" ,integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp", crossorigin="anonymous")
 
 nav 
-  ul 
+  ul(class='listaBtn')
     li 
-      a(href='/',class="btn-primary") Agregar producto 
+      a(href='/',class="btn-primary buttons") Agregar producto 
     li 
-      a(href='/productos',class="btn-primary") Lista de productos
+      a(href='/productos',class="btn-primary buttons") Lista de productos

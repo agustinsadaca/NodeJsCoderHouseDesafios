@@ -11,7 +11,6 @@ app.use(express.urlencoded({ extended: true }))
 	app.get('/productos',async (req, res) => {
 		const contenedor = new Contenedor();
 		const productos = await contenedor.getAll()
-		// res.send(productos)
 		res.render('producto', {
 			productos
 			

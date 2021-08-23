@@ -22,13 +22,5 @@
       "price": 41,
       "thumbnail": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png"
     }
-  },
-  {
-    "id": 4,
-    "producto": {
-      "title": "2",
-      "price": "2",
-      "thumbnail": "2"
-    }
   }
 ]

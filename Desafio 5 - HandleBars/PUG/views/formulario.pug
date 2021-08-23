@@ -6,12 +6,12 @@ html
     form(action='/productos' method="POST")
       fieldset 
         label(for='name') Nombre 
-        input(type="text" name='name' id='name')
+        input(type="text" class="form-control" name='name' id='name')
       fieldset 
         label(for='description') Price
-        input(type="text" name='price' id='description')
+        input(type="text" class="form-control" name='price' id='description')
       fieldset 
         label(for='image') Imagen 
-        input(type="text" name='thumbnail' id='image')
+        input(type="text" class="form-control" name='thumbnail' id='image')
       br
       button(type="submit") Enviar
