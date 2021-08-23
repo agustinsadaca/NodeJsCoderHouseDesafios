@@ -11,7 +11,8 @@ app.use(express.urlencoded({ extended: true }))
 	app.get('/productos',async (req, res) => {
 		const contenedor = new Contenedor();
 		const productos = await contenedor.getAll()
-		res.render('index', {
+		// res.send(productos)
+		res.render('producto', {
 			productos
 			
 		})
@@ -33,12 +34,9 @@ app.use(express.urlencoded({ extended: true }))
 
 	})
 
-	app.get('/create', (req, res) => {
-		res.render('formulario')
-	})
 	
 	app.get('/', (req, res) => {
-		res.render('pages/formulario')
+		res.render('formulario')
 	})
 
 

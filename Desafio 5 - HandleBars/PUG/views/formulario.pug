@@ -3,15 +3,15 @@ html
     title Crear producto
     include ../partials/menu
   body
-    form(action='/' method="POST")
+    form(action='/productos' method="POST")
       fieldset 
         label(for='name') Nombre 
         input(type="text" name='name' id='name')
       fieldset 
-        label(for='description') Descripción
-        input(type="text" name='description' id='description')
+        label(for='description') Price
+        input(type="text" name='price' id='description')
       fieldset 
         label(for='image') Imagen 
-        input(type="url" name='image' id='image')
+        input(type="text" name='thumbnail' id='image')
       br
       button(type="submit") Enviar
