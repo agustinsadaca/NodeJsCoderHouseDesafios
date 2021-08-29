@@ -7,7 +7,70 @@
     <input class="form-control" type="text" name="thumbnail" placeholder="Thumbnail">
     <button class="btn-block" type="submit ">Añadir Producto</button>
   </form>
+  <div class="prodTable"></div>
+  <h1>Websocket</h1>
+    <fieldset>
+      <label for="user">E-Mail</label>
+      <input type="text" name="user" id="user">
+      <label for="message">Mensaje</label>
+      <input type="text" name="message" id="message">
+      <button id='send'>Enviar</button>
+    </fieldset>
+    <fieldset>
+      <ul id='messages'>
+
+      </ul>
+    </fieldset>
 </body>
+<script>
+  const socket = io()
+
+  const message = document.getElementById("message")
+  const user = document.getElementById("user")
+  const send = document.getElementById("send").addEventListener('click',()=>{
+    socket.emit('messageFront', {'user':user.value,'message':message.value})
+  })
+
+  socket.on('productosBackend',(data)=>{
+  `<table class="u-full-width">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Thumbnail</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><p></p></td>
+      <td> <p> </p></td>
+      <td> <p></p></td>
+      <td><img class="imagen" src=""></td>
+    </tr>
+  
+      <td><p>No hay productos </p></td>
+    
+    </tbody>
+  </table>`
+})
+ 
+  
+  socket.on('messageBackend',(data)=>{
+    data = JSON.parse(data)
+    let inner=''
+    data.map((message)=>{
+      inner+=`
+        <li class="listaMensaje">
+          <div class="email text">  ${message.email} </div>
+          <div class="date text">  [${message.date}]:</div>
+          <div class="message text">  ${message.message}</div>
+        </li>
+      `
+    })
+    document.getElementById('messages').innerHTML=inner
+  })
+</script>
 <style>
   input{
     display: block;
@@ -15,4 +78,16 @@
     width: 25rem;
   }
   form{width:50%}
+  .listaMensaje{display:flex;}
+  .text{padding:0 3px;}
+  .email{
+    color:blue;
+    font-weight:600;
+  }
+  .date{
+    color:brown;
+  }
+  .message{
+    font-style: italic;
+  }
 </style>
