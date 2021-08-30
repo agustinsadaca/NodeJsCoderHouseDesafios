@@ -24,8 +24,8 @@ const messages = []
 	const mess = new Message()
 	const messGetAll = await mess.getAll()
 	socket.emit('messageBackend', messGetAll)
-
-	socket.on('disconnect', () => {
+	socket.emit('prodChangeBack',true)
+	socket.on('disconnect', (data) => {
 		console.log(emoji.get('fire'), 'Usuario desconectado')
 	})
 	socket.on('messageFront',async (data) => {
@@ -36,11 +36,12 @@ const messages = []
 		
 		io.sockets.emit('messageBackend', messGetAll)
 	})
-	socket.on('productosBackend',async (data) => {
 	
-		
-		io.sockets.emit('messageBackend', messGetAll)
+	socket.on('prodChange',(data) => {	
+		console.log('hola');
+		io.sockets.emit('prodChangeBack', true)
 	})
+
 })
 
 
@@ -57,6 +58,13 @@ app.get('/productos',async (req, res) => {
 		productos
 		
 	})
+	
+})
+app.get('/producto',async (req, res) => {
+	const contenedor = new Contenedor();
+	const productos = await contenedor.getAll()
+	
+	res.send(productos)
 })
 app.post('/productos',async (req, res) => {
 	// url http://localhost:8080/

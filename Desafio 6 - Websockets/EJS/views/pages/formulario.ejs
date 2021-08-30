@@ -5,10 +5,26 @@
     <input class="form-control"  type="text" name="title" placeholder="Title">
     <input class="form-control" type="number" step="0.01" name="price" placeholder="Price">
     <input class="form-control" type="text" name="thumbnail" placeholder="Thumbnail">
-    <button class="btn-block" type="submit ">Añadir Producto</button>
+    <button id="formulario" class="btn-block" type="submit ">Añadir Producto</button>
   </form>
-  <div class="prodTable"></div>
-  <h1>Websocket</h1>
+  <div >
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Thumbnail</th>
+        </tr>
+      </thead>
+      <tbody id="prodTable">
+      
+
+    
+    </tbody>
+    </table>
+  </div>
+  <h1>Chat</h1>
     <fieldset>
       <label for="user">E-Mail</label>
       <input type="text" name="user" id="user">
@@ -24,36 +40,39 @@
 </body>
 <script>
   const socket = io()
+  
+  document.getElementById("formulario").addEventListener('click',()=>{
+    socket.emit('prodChange', true)
+  })
 
+  socket.on('prodChangeBack',(data) =>{
+    console.log('hola2');
+    let contenido=''
+    fetch('/producto')
+    .then(response => response.json())
+    .then(data => {
+      
+      data.map(item=>{
+        contenido +=`
+          <tr>
+            <td><p>${item.id}</p></td>
+            <td> <p>${item.producto.title} </p></td>
+            <td> <p>${item.producto.price} </p></td>
+            <td><img class="imagen" src="${item.producto.thumbnail} "></td>
+          <tr>
+          `
+      })
+      document.getElementById("prodTable").innerHTML=contenido 
+  })
+
+  });
   const message = document.getElementById("message")
   const user = document.getElementById("user")
   const send = document.getElementById("send").addEventListener('click',()=>{
     socket.emit('messageFront', {'user':user.value,'message':message.value})
   })
+ 
 
-  socket.on('productosBackend',(data)=>{
-  `<table class="u-full-width">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Thumbnail</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td><p></p></td>
-      <td> <p> </p></td>
-      <td> <p></p></td>
-      <td><img class="imagen" src=""></td>
-    </tr>
-  
-      <td><p>No hay productos </p></td>
-    
-    </tbody>
-  </table>`
-})
  
   
   socket.on('messageBackend',(data)=>{
@@ -90,4 +109,9 @@
   .message{
     font-style: italic;
   }
+  .imagen{width:10%}
+  table{
+    margin: 20px;
+    
+}
 </style>
