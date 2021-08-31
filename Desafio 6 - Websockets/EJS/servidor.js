@@ -38,7 +38,6 @@ const messages = []
 	})
 	
 	socket.on('prodChange',(data) => {	
-		console.log('hola');
 		io.sockets.emit('prodChangeBack', true)
 	})
 
