@@ -24,7 +24,7 @@ const messages = []
 	const mess = new Message()
 	const messGetAll = await mess.getAll()
 	socket.emit('messageBackend', messGetAll)
-	socket.emit('prodChangeBack',true)
+	socket.emit('prodChangeBack',false)
 	socket.on('disconnect', (data) => {
 		console.log(emoji.get('fire'), 'Usuario desconectado')
 	})
@@ -37,8 +37,14 @@ const messages = []
 		io.sockets.emit('messageBackend', messGetAll)
 	})
 	
-	socket.on('prodChange',(data) => {	
-		io.sockets.emit('prodChangeBack', true)
+	socket.on('prodChange',async (data) => {	
+		const file = new Contenedor()
+		const guardar = await file.save({
+		title: data.title ,
+		price: data.price,
+		thumbnail: data.thumbnail,
+		})
+		io.sockets.emit('prodChangeBack', false)
 	})
 
 })
