@@ -127,12 +127,24 @@ app.get('/', (req, res) => {
 	
 	res.sendFile(__dirname + '/index.html')
 })
-routerCarrito.put('/:id', (req, res) => {
+routerCarrito.put('/:idCarrito', (req, res) => {
 
-	const  { timestamp, nombre, descripcion, código, foto, precio, stock}  = req.body
-	const {id} = req.params 
-	const producto = new Carrito();
-  producto.updateById(id, { timestamp, nombre, descripcion, código, foto, precio, stock}).catch(data => res.json({
+	const { timestampCarrito ,producto} = req.body
+	const  {id, timestamp, nombre, descripcion, codigo, foto, precio, stock}  = producto
+	const {idCarrito} = req.params 
+	const idCarr = parseInt(idCarrito,10)
+	const carrito = new Carrito();
+	carrito.updateById(idCarr, {
+	timestampCarrito:timestampCarrito,
+		producto:{
+		timestamp: timestamp,
+		nombre: nombre,
+		descripcion: descripcion,
+		codigo: codigo,
+		foto: foto,
+		precio: precio,
+		stock: stock,
+	}}).catch(data => res.json({
 		idProductoEditado:id
 	
 	}))		

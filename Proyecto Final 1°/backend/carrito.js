@@ -117,21 +117,21 @@ const fs = require('fs')
             },
         )
     }
-    async updateById(id,newObj){
+    async updateById(idCarr,newObj){
         let objUpdated
         myObject = await fs.promises
             .readFile('./backend/carrito.json', 'utf-8')
             .then((data) => {
                 const carrito = JSON.parse(data)
                 carrito.map((producto) => {
-                    producto['idCarrito'] == id ? (objUpdated = producto) : objUpdated
+                    producto['idCarrito'] == idCarr ? (objUpdated = producto) : objUpdated
                 })
                 const {idCarrito,timestampCarrito, producto} = newObj
                 const {id,timestamp, nombre, descripcion, codigo, foto, precio, stock} = producto
                 const index = carrito.indexOf(objUpdated)
-                objUpdated['idCarrito']=timestamp
-                objUpdated['timestampCarrito']=timestamp
-                objUpdated.producto['id']=timestamp
+                objUpdated['idCarrito']=idCarr
+                objUpdated['timestampCarrito']=timestampCarrito
+                objUpdated.producto['id']=id
                 objUpdated.producto['timestamp']=timestamp
                 objUpdated.producto['nombre']=nombre
                 objUpdated.producto['descripcion']=descripcion
