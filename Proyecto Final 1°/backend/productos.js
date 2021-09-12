@@ -5,7 +5,7 @@ const fs = require('fs')
     async save(producto) {
         let maxId = 0
         maxId = await fs.promises
-            .readFile('./productos.json', 'utf-8')
+            .readFile('./backend/productos.json', 'utf-8')
             .then((data) => {
                 const listadoProductos = JSON.parse(data)
                 if (Object.keys(listadoProductos).length === 0) {
@@ -30,7 +30,7 @@ const fs = require('fs')
                 'stock': producto['stock']})
                 
                 fs.writeFile(
-                    './productos.json',
+                    './backend/productos.json',
                     JSON.stringify(listadoProductos, null, 2),
                     (error) => {
                         if (error) {
@@ -53,7 +53,7 @@ const fs = require('fs')
     async getById(id) {
         let myObject = {}
         myObject = await fs.promises
-            .readFile('./productos.json', 'utf-8')
+            .readFile('./backend/productos.json', 'utf-8')
             .then((data) => {
                 const listadoProductos = JSON.parse(data)
                 listadoProductos.map((producto) => {
@@ -69,7 +69,7 @@ const fs = require('fs')
     async getAll() {
         let myObject = {}
         myObject = await fs.promises
-            .readFile('./productos.json', 'utf-8')
+            .readFile('./backend/productos.json', 'utf-8')
             .then((data) => {
                 myObject = JSON.parse(data)
                 return myObject
@@ -79,7 +79,7 @@ const fs = require('fs')
 
     async deleteById(id) {
         let listaSinElemento = await fs.promises
-            .readFile('./productos.json', 'utf-8')
+            .readFile('./backend/productos.json', 'utf-8')
             .then((data) => {
                 let myObject = []
                 let idExist = false
@@ -89,7 +89,7 @@ const fs = require('fs')
                 )
                 if(idExist == false){throw new Error('No se ha encontrado producto con dicho ID')}
                 fs.writeFile(
-                    './productos.json',
+                    './backend/productos.json',
                     JSON.stringify(myObject, null, 2),
                     (error) => {
                         if (error) {
@@ -106,7 +106,7 @@ const fs = require('fs')
 
     async deleteAll() {
         await fs.writeFile(
-            './productos.json',
+            './backend/productos.json',
             '',
             (error) => {
                 if (error) {
@@ -119,7 +119,7 @@ const fs = require('fs')
     async updateById(id,newObj){
         let objUpdated
         myObject = await fs.promises
-            .readFile('./productos.json', 'utf-8')
+            .readFile('./backend/productos.json', 'utf-8')
             .then((data) => {
                 const listadoProductos = JSON.parse(data)
                 listadoProductos.map((producto) => {
@@ -141,7 +141,7 @@ const fs = require('fs')
             })
             .then((listadoProductos)=>{
                 fs.writeFile(
-                    './productos.json',
+                    './backend/productos.json',
                     JSON.stringify(listadoProductos, null, 2),
                     (error) => {
                         if (error) {

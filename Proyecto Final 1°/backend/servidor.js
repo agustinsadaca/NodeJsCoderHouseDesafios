@@ -1,11 +1,16 @@
 const express = require("express");
+const cors = require('cors');
 const { Router } = express //Nueva linea
 const { Producto } = require("./productos");
 const { Carrito } = require("./carrito");
 
 const app = express();
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
 
 const routerProducto= new Router() 
 const routerCarrito= new Router() 
@@ -16,11 +21,13 @@ const routerCarrito= new Router()
 routerProducto.get("/", (req, res, next) => {
   const producto = new Producto();
   producto.getAll().then((obj) =>{
+    
     res.send(obj)
 	})
 });
 
 routerProducto.get("/:id", (req, res, next) => {
+ 
 	const {id} = req.params 
   const producto = new Producto();
   producto.getById(id).then((obj) => {
@@ -158,6 +165,9 @@ routerCarrito.delete('/:id', (req, res) => {
 		ProductoConIdBorrado:id,
 	})
 })
+
+
+// app.options('*', cors());
 
 app.use('/api/productos', routerProducto) 
 app.use('/api/carrito', routerCarrito) 

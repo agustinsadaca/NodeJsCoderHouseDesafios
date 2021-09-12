@@ -2,7 +2,7 @@
   "name": "class3",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "./backend/servidor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --config nodemon.json --inspect ./backend/servidor.js"
@@ -13,6 +13,7 @@
     "nodemon": "^2.0.12"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "moment": "^2.29.1"
   }
