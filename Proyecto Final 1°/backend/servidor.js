@@ -36,7 +36,7 @@ routerProducto.get("/:id", (req, res, next) => {
 });
 
 routerProducto.post('/', (req, res) => {
-	const  { timestamp, nombre, descripcion, codigo, foto, precio, stock}  = req.body
+	const  { timestamp, nombre, descripcion, codigo, foto, precio, stock, admin}  = req.body
 	// {
   //   "timestamp": 1631072864163,
   //   "nombre": "regla",
@@ -46,6 +46,8 @@ routerProducto.post('/', (req, res) => {
   //   "precio": 14,
   //   "stock": 14
   // }
+	if (admin){
+
 	const file = new Producto()
 	file.save({
 			
@@ -57,6 +59,9 @@ routerProducto.post('/', (req, res) => {
 			precio: precio,
 			stock: stock,
 	}).then(maxId => res.redirect("/api/productos/" + maxId))
+ }else{
+	 res.send({error : -1, descripcion: 'ruta api/productos método post/save no autorizada'})
+ }
 })
 
 app.get('/', (req, res) => {
@@ -65,22 +70,31 @@ app.get('/', (req, res) => {
 })
 routerProducto.put('/:id', (req, res) => {
 
-	const  { timestamp, nombre, descripcion, código, foto, precio, stock}  = req.body
+	const  { timestamp, nombre, descripcion, código, foto, precio, stock,admin}  = req.body
 	const {id} = req.params 
+	if (admin){
 	const producto = new Producto();
   producto.updateById(id, { timestamp, nombre, descripcion, código, foto, precio, stock}).catch(data => res.json({
 		idProductoEditado:id
 	
 	}))		
+	}else{
+		res.send({error : -2, descripcion: 'ruta api/productos método put/update no autorizada'})
+	}
 })
 
 routerProducto.delete('/:id', (req, res) => {
 	const {id} = req.params 
+	const {admin}  = req.body
+	if (admin){
 	const producto = new Producto();
 	producto.deleteById(id)
 	res.json({
 		ProductoConIdBorrado:id,
 	})
+	}else{
+		res.send({error : -3, descripcion: 'ruta api/productos método delete no autorizada'})
+	}
 })
 
 /* -------------------------------------------------------------------------- */

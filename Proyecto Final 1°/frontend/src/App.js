@@ -1,12 +1,12 @@
 import './App.css';
-import ListOfProducts from './Components/ListOfProducts/ListOfProducts';
+import ListOfProducts from './components/ListOfProducts/ListOfProducts';
 
+sessionStorage.setItem('admin', true);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header"/>
-      <ListOfProducts></ListOfProducts>
+    <div className="App App-header">
+      <ListOfProducts className="App-header" ></ListOfProducts>
 
     </div>
   );

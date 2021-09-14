@@ -3,9 +3,40 @@
     "id": 1,
     "timestamp": 1631072864163,
     "descripcion": "elemento de medicion",
+    "codigo": 1515,
     "foto": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png",
     "precio": 17,
     "stock": 17,
     "nombre": "regla"
+  },
+  {
+    "id": 1,
+    "timestamp": 1631072864163,
+    "descripcion": "elemento de medicion",
+    "codigo": 1515,
+    "foto": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png",
+    "precio": 17,
+    "stock": 17,
+    "nombre": "regla"
+  },
+  {
+    "id": 2,
+    "timestamp": 1631072864163,
+    "nombre": "regla",
+    "descripcion": "elemento de medicion",
+    "codigo": 1515,
+    "foto": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png",
+    "precio": 17,
+    "stock": 17
+  },
+  {
+    "id": 3,
+    "timestamp": 1631072864163,
+    "nombre": "regla",
+    "descripcion": "elemento de medicion",
+    "codigo": 1515,
+    "foto": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png",
+    "precio": 17,
+    "stock": 17
   }
 ]
