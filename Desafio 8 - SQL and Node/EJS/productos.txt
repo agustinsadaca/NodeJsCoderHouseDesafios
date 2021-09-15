@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "producto": {
+      "title": "Escuadra",
+      "price": 123.45,
+      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
+    }
+  },
+  {
+    "id": 2,
+    "producto": {
+      "title": "Calculadora",
+      "price": 234.56,
+      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png"
+    }
+  },
+  {
+    "id": 3,
+    "producto": {
+      "title": "regla",
+      "price": 41,
+      "thumbnail": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png"
+    }
+  }
+]
