@@ -25,7 +25,7 @@ const config ={
 	},
 }
 createTable.createTable()
-createTableSqlite.createTable()
+// createTableSqlite.createTable()
 /* -------------------------------------------------------------------------- */
 /*                                  Socket.io                                 */
 /* -------------------------------------------------------------------------- */
