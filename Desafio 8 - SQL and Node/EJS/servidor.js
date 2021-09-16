@@ -1,4 +1,5 @@
-const createTable = require('./createTable')
+const createTable = require('./Knex/createTable')
+const createTableSqlite = require('./sqlite3/createTable')
 const express = require('express')
 const emoji = require('node-emoji')
 const { Contenedor } = require("./productos");
@@ -14,7 +15,17 @@ const io = new IOServer(httpServer,{
 		oring:'http://localhost:3000',
 	},
 })
+const config ={
+	client: 'mysql2',
+	connection: {
+		host: '127.0.0.1',
+		user: 'root',
+		password: '',
+		database: 'coderhouse',
+	},
+}
 createTable.createTable()
+createTableSqlite.createTable()
 /* -------------------------------------------------------------------------- */
 /*                                  Socket.io                                 */
 /* -------------------------------------------------------------------------- */
@@ -40,7 +51,7 @@ const messages = []
 	})
 	
 	socket.on('prodChange',async (data) => {	
-		const file = new Contenedor()
+		const file = new Contenedor(config)
 		const guardar = await file.save({
 		title: data.title ,
 		price: data.price,
@@ -59,8 +70,9 @@ app.set('views', './views')
 app.set('view engine', 'ejs')
 
 app.get('/productos',async (req, res) => {
-	const contenedor = new Contenedor();
+	const contenedor = new Contenedor(config);
 	const productos = await contenedor.getAll()
+	// console.log(productos[0]);
 	res.render('pages/productos', {
 		productos
 		
@@ -68,9 +80,10 @@ app.get('/productos',async (req, res) => {
 	
 })
 app.get('/producto',async (req, res) => {
-	const contenedor = new Contenedor();
+	const contenedor = new Contenedor(config);
 	const productos = await contenedor.getAll()
-	
+	// console.log(productos[0]);
+
 	res.send(productos)
 })
 app.post('/productos',async (req, res) => {
@@ -94,7 +107,7 @@ app.get('/', (req, res) => {
 })
 
 
-httpServer.listen(8081, () => console.log('Server started on 8081'))
+httpServer.listen(8080, () => console.log('Server started on 8080'))
 
 
 

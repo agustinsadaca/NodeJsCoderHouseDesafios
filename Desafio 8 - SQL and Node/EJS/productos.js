@@ -1,74 +1,47 @@
 const fs = require('fs')
 
  class Contenedor {
-    constructor() {}
+    constructor(config) {
+        this.config = config
+    }
     async save(producto) {
-        let maxId = 0
-        maxId = await fs.promises
-            .readFile('./productos.txt', 'utf-8')
-            .then((data) => {
-                const listadoProductos = JSON.parse(data)
-                if (Object.keys(listadoProductos).length === 0) {
-                    producto['id'] = 1
-                    maxId = 1
-                } else {
-                    listadoProductos.map((producto) =>
-                        producto['id'] > maxId
-                            ? (maxId = producto['id'])
-                            : maxId,
-                    )
-                    maxId = ++maxId
-                    producto['id'] = maxId
-                }
-                listadoProductos.push({'id':producto['id'],'producto':
-                {'title':producto.title,'price':producto.price,'thumbnail':producto.thumbnail }})
-                
-                fs.writeFile(
-                    './productos.txt',
-                    JSON.stringify(listadoProductos, null, 2),
-                    (error) => {
-                        if (error) {
-                            console.log(error)
-                            throw new Error('Error: ' + error.message)
-                        } else {
-                            console.log('Creado con exito')
-                           
-                        }
-                    },
-                )
-                return maxId
-            })
-            .catch((error) => console.log(error))
-      
-        
-        return maxId
+        const db = require('knex')(this.config)
+        try {
+            const response = await db.insert(producto).from('productos')
+            console.log('Productos insertados!')
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            db.destroy()
+        }
+        return 
     }
 
     async getById(id) {
-        let myObject = {}
-        myObject = await fs.promises
-            .readFile('./productos.txt', 'utf-8')
-            .then((data) => {
-                const listadoProductos = JSON.parse(data)
-                listadoProductos.map((producto) => {
-                    producto['id'] == id ? (myObject = producto) : myObject
-                })
-                return myObject
-            })
-            .catch((error) => {return {error : 'producto no encontrado'}})
-            
-        return Object.keys(myObject).length === 0 ? {error : 'producto no encontrado'} : myObject
+        const db = require('knex')(this.config)
+
+        try {
+            const product = await db.select().from('productos').where('id',id)
+            return product
+        } catch (error) {
+            console.log(error)
+        } finally {
+            db.destroy()
+        }
     }
 
     async getAll() {
-        let myObject = {}
-        myObject = await fs.promises
-            .readFile('./productos.txt', 'utf-8')
-            .then((data) => {
-                myObject = JSON.parse(data)
-                return myObject
-            })
-        return myObject
+        const db = require('knex')(this.config)
+
+        try {
+            const product = await db.select().from('productos')
+            return product
+        } catch (error) {
+            console.log(error)
+        } finally {
+            db.destroy()
+        }
     }
 
     async deleteById(id) {
@@ -146,7 +119,7 @@ const fs = require('fs')
     }
 }
 
-const file = new Contenedor()
+// const file = new Contenedor()
 
 // file.save({
 //     title: '(nombre del producto)',

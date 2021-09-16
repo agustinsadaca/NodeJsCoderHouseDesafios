@@ -10,4 +10,4 @@ dotenv.config()
 		database: process.env.DATABASE,
 	},
 }
-module.export={config}
+module.exports={config}

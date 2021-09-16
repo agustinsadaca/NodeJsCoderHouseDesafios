@@ -1,5 +1,5 @@
-const { db } = require( './db.js')
-
+const { config } = require('./config.js')
+const db = require('knex')(config)
 async function createTable () {
 	try {
 		/* ------------------------------ tabla existe ------------------------------ */

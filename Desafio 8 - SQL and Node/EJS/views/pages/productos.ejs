@@ -10,13 +10,14 @@
         <th>Thumbnail</th>
       </tr>
     </thead>
+    <% console.log(productos)%>
     <% if(productos.length != 0){ productos.map(elem => { %>
     <tbody>
     <tr>
       <td><p><%=elem.id%></p></td>
-      <td> <p> <%=elem.producto.title%></p></td>
-      <td> <p><%=elem.producto.price%></p></td>
-      <td><img class="imagen" src="<%=elem.producto.thumbnail%>"></td>
+      <td> <p> <%=elem.title%></p></td>
+      <td> <p><%=elem.price%></p></td>
+      <td><img class="imagen" src="<%=elem.thumbnail%>"></td>
     </tr>
     <% })} else { %>
       <td><p>No hay productos </p></td>
