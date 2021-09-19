@@ -70,11 +70,11 @@ app.get('/', (req, res) => {
 })
 routerProducto.put('/:id', (req, res) => {
 
-	const  { timestamp, nombre, descripcion, código, foto, precio, stock,admin}  = req.body
+	const  { timestamp, nombre, descripcion, codigo, foto, precio, stock,admin}  = req.body
 	const {id} = req.params 
 	if (admin){
 	const producto = new Producto();
-  producto.updateById(id, { timestamp, nombre, descripcion, código, foto, precio, stock}).catch(data => res.json({
+  producto.updateById(parseInt(id), { timestamp, nombre, descripcion, codigo, foto, precio, stock}).catch(data => res.json({
 		idProductoEditado:id
 	
 	}))		
@@ -88,7 +88,7 @@ routerProducto.delete('/:id', (req, res) => {
 	const {admin}  = req.body
 	if (admin){
 	const producto = new Producto();
-	producto.deleteById(id)
+	producto.deleteById(parseInt(id))
 	res.json({
 		ProductoConIdBorrado:id,
 	})
@@ -140,8 +140,7 @@ routerCarrito.post('/', (req, res) => {
 			foto: foto,
 			precio: precio,
 			stock: stock,
-	}}).then(maxId =>{c
-		res.send(maxId)})
+	}}).then(maxId =>{res.send(maxId)})
 })
 
 app.get('/', (req, res) => {

@@ -23,7 +23,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.cart{
+  color: white;
+  margin-left: auto;
+  
+}
 .App-link {
   color: #61dafb;
 }

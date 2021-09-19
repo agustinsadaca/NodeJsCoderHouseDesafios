@@ -43,6 +43,8 @@ const fs = require('fs')
                         }
                     },
                 )
+                .catch((error) => console.log(error))
+
                 return maxId
             })
             .catch((error) => console.log(error))

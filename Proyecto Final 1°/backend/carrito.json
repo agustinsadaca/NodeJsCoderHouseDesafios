@@ -1,15 +1,1 @@
-[
-  {
-    "idCarrito": 1,
-    "timestampCarrito": 1631072864163,
-    "producto": {
-      "timestamp": 1631072864163,
-      "nombre": "reg",
-      "descripcion": "descripcion",
-      "codigo": "codigo",
-      "foto": "foto",
-      "precio": 20,
-      "stock": 30
-    }
-  }
-]
+[]

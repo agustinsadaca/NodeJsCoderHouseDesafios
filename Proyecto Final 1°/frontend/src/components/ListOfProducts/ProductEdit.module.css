@@ -1,18 +1,10 @@
-img {
- width: 60%;
-  height: auto;
-}
-.tdImg{
-  height: 150px;
-  width: 150px;
-}
-.producto  {
-  display: flex;
-}
 .button{
   color: white;
+  
 }
-
+.editModal{
+  margin:20px;
+}
 
 
 .actions button {
