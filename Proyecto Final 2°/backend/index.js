@@ -1,8 +1,9 @@
-const express = require("express");
-const cors = require('cors');
-const { Router } = express //Nueva linea
-const { Producto } = require("./productos");
-const { Carrito } = require("./carrito");
+import express from "express";
+import cors from 'cors';
+import  Router from 'express' 
+import  Producto from "./services/producto.js";
+import  Carrito from "./services/carrito.js";
+ 
 
 const app = express();
 app.use(cors({
@@ -20,7 +21,7 @@ const routerCarrito= new Router()
 
 routerProducto.get("/", (req, res, next) => {
   const producto = new Producto();
-  producto.getAll().then((obj) =>{
+  producto.readAll().then((obj) =>{
     
     res.send(obj)
 	})
@@ -30,7 +31,7 @@ routerProducto.get("/:id", (req, res, next) => {
  
 	const {id} = req.params 
   const producto = new Producto();
-  producto.getById(id).then((obj) => {
+  producto.readOne(id).then((obj) => {
     res.send(obj);
   });
 });
@@ -49,7 +50,7 @@ routerProducto.post('/', (req, res) => {
 	if (admin){
 
 	const file = new Producto()
-	file.save({
+	file.createProducto({
 			
 			timestamp: timestamp,
 			nombre: nombre,
@@ -74,7 +75,7 @@ routerProducto.put('/:id', (req, res) => {
 	const {id} = req.params 
 	if (admin){
 	const producto = new Producto();
-  producto.updateById(parseInt(id), { timestamp, nombre, descripcion, codigo, foto, precio, stock}).catch(data => res.json({
+  producto.update(id, { timestamp, nombre, descripcion, codigo, foto, precio, stock}).catch(data => res.json({
 		idProductoEditado:id
 	
 	}))		
@@ -88,7 +89,7 @@ routerProducto.delete('/:id', (req, res) => {
 	const {admin}  = req.body
 	if (admin){
 	const producto = new Producto();
-	producto.deleteById(parseInt(id))
+	producto.deleteProducto(id)
 	res.json({
 		ProductoConIdBorrado:id,
 	})
@@ -102,7 +103,7 @@ routerProducto.delete('/:id', (req, res) => {
 /* -------------------------------------------------------------------------- */
 routerCarrito.get("/", (req, res, next) => {
   const producto = new Carrito();
-  producto.getAll().then((obj) =>{
+  producto.readAll().then((obj) =>{
     res.send(obj)
 	})
 });
@@ -110,7 +111,7 @@ routerCarrito.get("/", (req, res, next) => {
 routerCarrito.get("/:id", (req, res, next) => {
 	const {id} = req.params 
   const producto = new Carrito();
-  producto.getById(id).then((obj) => {
+  producto.readOne(id).then((obj) => {
     res.send(obj);
   });
 });
@@ -130,7 +131,7 @@ routerCarrito.post('/', (req, res) => {
 	// 		"stock": 30
 	// }}
 	const file = new Carrito()
-	file.save({
+	file.createCarrito({
 		  timestampCarrito:timestampCarrito,
 			producto:{
 			timestamp: timestamp,
@@ -152,9 +153,9 @@ routerCarrito.put('/:idCarrito', (req, res) => {
 	const { timestampCarrito ,producto} = req.body
 	const  {id, timestamp, nombre, descripcion, codigo, foto, precio, stock}  = producto
 	const {idCarrito} = req.params 
-	const idCarr = parseInt(idCarrito,10)
+	const idCarr = idCarrito
 	const carrito = new Carrito();
-	carrito.updateById(idCarr, {
+	carrito.update(idCarr, {
 	timestampCarrito:timestampCarrito,
 		producto:{
 		timestamp: timestamp,
@@ -173,7 +174,7 @@ routerCarrito.put('/:idCarrito', (req, res) => {
 routerCarrito.delete('/:id', (req, res) => {
 	const {id} = req.params 
 	const producto = new Carrito();
-	producto.deleteById(id)
+	producto.deleteCarrito(id)
 	res.json({
 		ProductoConIdBorrado:id,
 	})

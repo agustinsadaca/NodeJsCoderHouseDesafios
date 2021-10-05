@@ -33,8 +33,8 @@ const ListOfProducts = (props) => {
     listP = products.map((prod) => (
       <Card>
         <ItemProducto
-          key={prod.id}
-          id={prod.id}
+          key={prod._id}
+          id={prod._id}
           timestamp={prod.timestamp}
           descripcion={prod.descripcion}
           foto={prod.foto}

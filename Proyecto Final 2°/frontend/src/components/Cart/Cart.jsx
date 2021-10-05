@@ -20,8 +20,8 @@ function Cart(props) {
       <Card>
         <CartItems
           onDelete={setcartItems}
-          key={cartItem.idCarrito}
-          idCarrito={cartItem.idCarrito}
+          key={cartItem._id}
+          idCarrito={cartItem._id}
           timestampCarrito={cartItem.timestampCarrito}
           descripcion={cartItem.producto.descripcion}
           foto={cartItem.producto.foto}

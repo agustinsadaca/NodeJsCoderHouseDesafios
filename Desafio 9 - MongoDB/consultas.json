@@ -2,6 +2,11 @@
 /*                                  Productos                                 */
 /* -------------------------------------------------------------------------- */
 
+// servidor
+mongod --dbpath “C:\Users\agust\Documents\pruebasNode\mongodb”
+// client
+mongo
+
 db.createCollection("productos",{ validator: {$jsonSchema: { bsonType: "object", properties: { product:{ required: [
   "title",
   "price",
