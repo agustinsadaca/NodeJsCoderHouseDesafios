@@ -8,6 +8,9 @@ const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const { Socket } = require("dgram");
 const fakerUtil = require("./utils/producto.utils");
+const { normalize, denormalize, schema } = require("normalizr");
+const util = require("util");
+
 // const { normalize } = require("path");
 
 const app = express();
@@ -37,8 +40,27 @@ io.on("connection", async (socket) => {
   console.log(emoji.get("pizza"), "Usuario conectado");
   socket.emit("connectionMessage", "Bienvenidos a el socket Coderhouse");
   const mess = new Message();
-  const messGetAll = await mess.getAll();
-  socket.emit("messageBackend", messGetAll);
+  /* -------------------------------------------------------------------------- */
+  /*                                  Normalize                                 */
+  /* -------------------------------------------------------------------------- */
+  
+  const messGetAll = await mess.getAll().then(data=>{
+  const user = new schema.Entity("user");
+  const comment = new schema.Entity("comment", {
+    author: user,
+  });
+  const chat = new schema.Entity("chat", {
+    comments: [comment],
+  });
+  const normData = normalize(JSON.parse(data), chat);
+
+  function print(objeto) {
+    console.log(util.inspect(objeto, false, 12, true));
+  }
+  print(normData);
+
+  socket.emit("messageBackend", normData);
+  })
   socket.emit("prodChangeBack", false);
   socket.on("disconnect", (data) => {
     console.log(emoji.get("fire"), "Usuario desconectado");
@@ -89,15 +111,14 @@ app.get("/producto", async (req, res) => {
   res.send(productos);
 });
 
-
 app.post("/productos", async (req, res) => {
-	// url http://localhost:8080/
+  // url http://localhost:8080/
   const { title, thumbnail, price } = req.body;
-	
+
   const file = new Contenedor();
-	
+
   const guardar = await file.save({
-		title: title,
+    title: title,
     price: price,
     thumbnail: thumbnail,
   });
@@ -109,42 +130,15 @@ app.post("/productos", async (req, res) => {
 /*                                    Mock                                    */
 /* -------------------------------------------------------------------------- */
 app.get("/producto/test", async (req, res) => {
-	let productos = [];
-	for (let i = 0; i < 5; i++) {
-		const producto = { ...fakerUtil() };
-		productos.push(producto);
-	}
-	res.render("pages/productosFaker", {
-		productos,
-	});
+  let productos = [];
+  for (let i = 0; i < 5; i++) {
+    const producto = { ...fakerUtil() };
+    productos.push(producto);
+  }
+  res.render("pages/productosFaker", {
+    productos,
+  });
 });
-/* -------------------------------------------------------------------------- */
-/*                                  Normalize                                 */
-/* -------------------------------------------------------------------------- */
-const {normalize, denormalize, schema } = require('normalizr')
-const util = require('util');
-
-const  getMessages = async() =>{
-const mess = new Message();
-const messGetAll = await mess.getAll();
-return messGetAll
-}
-const messagess = getMessages().then(data=>{
-const usuario = new schema.Entity("usuario")
-const text = new schema.Entity("text")
-
-const mensaje = new schema.Entity('mensaje', {
-  author: usuario,
-  text:text
-})
-const normData = normalize(JSON.parse(data), mensaje)
-
-function print(objeto) {
-  console.log(util.inspect(objeto, false, 12, true))
-}
-print(normData)
-})
-
 
 app.get("/", (req, res) => {
   res.render("pages/formulario");

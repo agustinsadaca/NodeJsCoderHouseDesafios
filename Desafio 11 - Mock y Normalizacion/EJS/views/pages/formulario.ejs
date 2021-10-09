@@ -77,14 +77,30 @@
   })
 
   socket.on('messageBackend',(data)=>{
-    data = JSON.parse(data)
+    // alert(JSON.stringify(data, null, 4));
+    const user = new schema.Entity("user");
+    const comment = new schema.Entity("comment", {
+      author: user,
+    });
+    const chat = new schema.Entity("chat", {
+      comments: [comment],
+    });
+    const normData = normalize(JSON.parse(data), chat);
+
+    function print(objeto) {
+      console.log(util.inspect(objeto, false, 12, true));
+    }
+    print(normData);
+    const denData = denormalize(normData.result, chat, normData.entities)
+
     let inner=''
-    data.map((message)=>{
+    denData.comments.map((message)=>{
       inner+=`
         <li class="listaMensaje">
-          <div class="email text">  ${message.email} </div>
+          <div class="email text">  ${message.id} </div>
           <div class="date text">  [${message.date}]:</div>
-          <div class="message text">  ${message.message}</div>
+          <div class="message text">  ${message.text}</div>
+          <img href="${message.author.avartar}"/>
         </li>
       `
     })
