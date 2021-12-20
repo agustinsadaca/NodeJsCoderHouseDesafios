@@ -3,32 +3,40 @@ import React, { Fragment,useState } from 'react'
 import ListOfProducts from './components/ListOfProducts/ListOfProducts';
 import Cart from './components/Cart/Cart'
 import Modal from './components/UI/Modal'
+import Login from './components/Login/login'
 sessionStorage.setItem('admin', true);
 
 function App() {
   const [cartVisibility, setcartVisibility] = useState(false)
+  const [logged, setLogged] = useState(false)
   const allowCartVisibility = (params) => {
     setcartVisibility(true)
   }
   const hideCart = (params) => {
     setcartVisibility(false)
   }
-  
-  
+  const cartVisible = () => {
+    if(cartVisibility){
+      return (<Modal onClose={hideCart}><Cart/></Modal>)
+    }else{
+      return Fragment
+    }
+  }
+  const Islogged = () => {
+    if (logged) {
+      return (<div><button className='cart' onClick={allowCartVisibility}>Carrito</button>
+      {cartVisible}
+      <ListOfProducts className="App-header"/></div>)
+    }else{
+      return <Login/>
+    }
+  }
+
   return (
     <div className="App App-header">
-      <button className='cart' onClick={allowCartVisibility}>Carrito</button>
-      {cartVisibility ?(
-        <Modal onClose={hideCart}>
-        <Cart>
-
-        </Cart>
-        </Modal>
-      ):Fragment}
-      <ListOfProducts className="App-header" ></ListOfProducts>
-
+       {Islogged()}
     </div>
-  );
+  )
 }
 
 export default App;

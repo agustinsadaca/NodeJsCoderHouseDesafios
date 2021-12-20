@@ -18,3 +18,13 @@
   font: inherit;
   padding-left: 0.5rem;
 }
+.inputLogin, select, textarea{
+  color:#282C34;
+}
+input, select, textarea{
+  color: #282C34;
+}
+
+textarea:focus, input:focus {
+  color: #282C34;
+}
