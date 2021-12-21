@@ -14,14 +14,13 @@ export function getLogin(req, res) {
     })
   } else {
     console.log('No esta registrado')
-    res.sendFile(path.resolve()+'/views/login.html')
+    res.sendFile(path.resolve()+'/')
   }
 }
 
 export function postLogin(req, res) {
   const user = req.user
-  console.log(user)
-  res.sendFile(path.resolve()+'/views/index.html')
+  res.status(200)
 }
 
 export function getFailLogin(req, res){
@@ -30,26 +29,25 @@ export function getFailLogin(req, res){
 }
 
 export function getSignup(req, res){
-  res.sendFile(path.resolve()+'/views/signup.html')
+  res.sendFile(path.resolve()+'/registrarse')
 }
 
 export function postSignup(req, res) {
 
   const user = req.user
   enviarMail.enviarMail(user)
-  // console.log(user)
-  // res.json({Creaddoooooo:1331})
-  res.sendFile(path.resolve()+'/')
+
+  res.sendFile(path.resolve()+'OK')
 }
 
 export function getFailSignup(req, res) {
   console.log('Error en el registro')
-  res.json({ error: "as" })
+  res.json({ error: "err" })
   // res.render('signup-error', {})
 }
 
 export function logout(req, res) {
   console.log('Logout')
-  res.sendFile(path.resolve()+'/views/index.html')
+  res.sendFile(path.resolve()+'/')
 }
 

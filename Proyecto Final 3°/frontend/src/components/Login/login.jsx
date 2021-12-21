@@ -1,44 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import Input from "../UI/Input";
 import classes from "./login.module.css";
+import { Link } from "react-router-dom";
 
 
-const login = ( props) => {
-  const sendLogin = (params) => {
-    
+const Login = ( props) => {
+  const [userData, setUserData] = useState({
+    user:"",
+    password:"",
+  })
+  const handleDataChange = (event) => {
+    setUserData({...userData,[event.target.name]:event.target.value})
+  }
+  const sendLogin = (event) => {
+    event.preventDefault()
+    const res =  axios.post(`http://localhost:8080/login?username=${userData.user}&password=${userData.password}`
+    )
   }
   console.log( window.location.href)
   return(<div>
     <form onSubmit={sendLogin}>
         <Input
-          label="Usuario"
+          label="User"
           input={{
-            id: "usuario" ,
+            id: "user" ,
             type: "text",
             className:"inputLogin",
+            onChange: handleDataChange,
             
-            name: "usuario",
+            name: "user",
           }}
         ></Input>
         <Input
-          label="Contraseña"
+          label="Password"
           input={{
-            id: "Contraseña" ,
+            id: "password" ,
             type: "text",
+            onChange: handleDataChange,
             
             
-            name: "Contraseña",
+            name: "password",
           }}
         ></Input>
         <button className={classes.buttonLogin} onClick={props.onClose}>
             Entrar
         </button>
-        <a href={"/registrarse"} className={classes.registro}>Registrarse</a>
+        <Link to="/registrarse" > Registrarse</Link>
 
 
     </form>
 
   </div>)
 }
-export default login
+export default Login

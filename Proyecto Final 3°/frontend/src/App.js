@@ -3,7 +3,8 @@ import React, { Fragment,useState } from 'react'
 import ListOfProducts from './components/ListOfProducts/ListOfProducts';
 import Cart from './components/Cart/Cart'
 import Modal from './components/UI/Modal'
-import Login from './components/Login/login'
+import Login from './components/Login/Login'
+
 sessionStorage.setItem('admin', true);
 
 function App() {
