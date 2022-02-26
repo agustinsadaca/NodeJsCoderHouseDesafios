@@ -33,7 +33,7 @@ app.use('/',UserRouter)
 app.use('/api/productos', routerProducto) 
 app.use('/api/carrito', routerCarrito) 
 
-const PORT = 8080;
+const PORT = process.env.PORT;
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);
