@@ -1,6 +1,5 @@
 import express from 'express'
-import passport from '../utils/passport.util.js'
-import * as AuthController from '../controllers/auth.controller.js'
+import * as AuthController from '../controllers/auth.controllerTest.js'
 import  Producto from "../services/producto.js";
 import  Carrito from "../services/carrito.js";
 

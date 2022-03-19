@@ -16,7 +16,7 @@ const ItemProducto = (props) => {
   const hideEditModal = (params) => {
     seteditModalVisivility(false);
   };
-  const addCartItem =async (params) => {
+  const addCartItem = async (params) => {
     const saveCartItem = await axios.post(`http://localhost:8080/api/carrito`,{
       timestampCarrito:Date.now(),
       producto:{
