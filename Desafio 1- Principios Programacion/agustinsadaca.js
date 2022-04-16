@@ -1,126 +1,81 @@
-const fs = require('fs')
+let listadoProductos = [
+  {
+    title: "regla",
+    price: 30,
+    thumbnail:
+      "https://cdns.iconmonstr.com/wp-content/assets/preview/2015/240/iconmonstr-ruler-2.png",
+    id: 1,
+  },
+  {
+    title: "pencil",
+    price: 20,
+    thumbnail:
+      "https://cdns.iconmonstr.com/wp-content/assets/preview/2012/240/iconmonstr-pencil-9.png",
+    id: 2,
+  },
+];
 
 class Contenedor {
-    constructor() {}
-    async save(producto) {
-        let maxId = 0
-        maxId = await fs.promises
-            .readFile('./productos.txt', 'utf-8')
-            .then((data) => {
-                const listadoProductos = JSON.parse(data)
-                if (Object.keys(listadoProductos).length === 0) {
-                    producto['id'] = 1
-                    maxId = 1
-                } else {
-                    listadoProductos.map((producto) =>
-                        producto['id'] > maxId
-                            ? (maxId = producto['id'])
-                            : maxId,
-                    )
-                    maxId = ++maxId
-                    producto['id'] = maxId
-                }
-                listadoProductos.push(producto)
-                fs.writeFile(
-                    './productos.txt',
-                    JSON.stringify(listadoProductos, null, 2),
-                    (error) => {
-                        if (error) {
-                            console.log(error)
-                            throw new Error('Error: ' + error.message)
-                        } else {
-                            console.log('Creado con exito')
-                        }
-                    },
-                )
-                return maxId
-            })
-            .catch((error) => console.log(error))
-      
-        
-        return maxId
+  constructor() {}
+  save(producto) {
+    let id = 0;
+    if (listadoProductos.length === 0) {
+      id = 1;
+    } else {
+      listadoProductos.map((row) => {
+        if (row.id >= id) {
+          id = row.id + 1;
+        }
+      });
     }
+    producto["id"] = id;
+    listadoProductos.push(producto);
+  }
 
-    async getById(id) {
-        let myObject = {}
-        myObject = await fs.promises
-            .readFile('./productos.txt', 'utf-8')
-            .then((data) => {
-                const listadoProductos = JSON.parse(data)
-                listadoProductos.map((producto) => {
-                    producto['id'] == id ? (myObject = producto) : myObject
-                })
-                return myObject
-            })
-            .catch((error) => console.log(error))
-            
-        return Object.keys(myObject).length === 0 ? null : myObject
-    }
+  getById(id) {
+    let obj = listadoProductos.find((data) => (data.id = id));
+    return Object.keys(listadoProductos).length === 0 ? null : obj;
+  }
 
-    async getAll() {
-        let myObject = {}
-        myObject = await fs.promises
-            .readFile('./productos.txt', 'utf-8')
-            .then((data) => {
-                myObject = JSON.parse(data)
-                return myObject
-            })
-        return myObject
-    }
+  getAll() {
+    return listadoProductos;
+  }
 
-    async deleteById(id) {
-        let listaSinElemento = await fs.promises
-            .readFile('./productos.txt', 'utf-8')
-            .then((data) => {
-                let myObject = []
-                let idExist = false
-                let listadoProductos = JSON.parse(data)
-                listadoProductos.map((producto) =>
-                    producto['id'] != id ? myObject.push(producto) : idExist = true,
-                )
-                if(idExist == false){throw new Error('No se ha encontrado producto con dicho ID')}
-                fs.writeFile(
-                    './productos.txt',
-                    JSON.stringify(myObject, null, 2),
-                    (error) => {
-                        if (error) {
-                            console.log(error)
-                            throw new Error('Error: ' + error.message)
-                        }
-                    },
-                )
-                return myObject
-            })
-            .catch((error) => console.log(error))
-        
-    }
+  deleteById(id) {
+    let obj = listadoProductos.find((data) => (data.id = id));
+    listadoProductos.splice(listadoProductos.indexOf(obj), 1);
+  }
 
     async deleteAll() {
-        await fs.writeFile(
-            './productos.txt',
-            '[]',
-            (error) => {
-                if (error) {
-                    console.log(error)
-                    throw new Error('Error: ' + error.message)
-                }
-            },
-        )
+        listadoProductos = []
     }
 }
 
-const file = new Contenedor()
-
+const file = new Contenedor();
+/* -------------------------------------------------------------------------- */
+/*                                      1                                     */
+/* -------------------------------------------------------------------------- */
 file.save({
-    title: '(nombre del producto)',
-    price: 30,
-    thumbnail: '(url de la foto del producto)',
-}).then(maxId => console.log('Ultimo Id', maxId))
+  title: "bag",
+  price: 50,
+  thumbnail:
+    "https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-shopping-bag-4.png",
+});
+console.log(listadoProductos);
+/* -------------------------------------------------------------------------- */
+/*                                      2                                     */
+/* -------------------------------------------------------------------------- */
+console.log(file.getById(3));
+/* -------------------------------------------------------------------------- */
+/*                                      3                                     */
+/* -------------------------------------------------------------------------- */
+console.log(file.getAll());
+/* -------------------------------------------------------------------------- */
+/*                                      4                                     */
+/* -------------------------------------------------------------------------- */
+file.deleteById(2);
+/* -------------------------------------------------------------------------- */
+/*                                      5                                     */
+/* -------------------------------------------------------------------------- */
 
-file.getById(3).then(obj => console.log('Objeto buscado es', obj))
-
-file.getAll().then(obj => console.log('La lista de productos es', obj))
-
-file.deleteById(3)
-
-file.deleteAll()
+file.deleteAll();
