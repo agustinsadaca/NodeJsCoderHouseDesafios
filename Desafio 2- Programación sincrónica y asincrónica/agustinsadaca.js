@@ -112,15 +112,15 @@ class Contenedor {
 const file = new Contenedor()
 
 file.save({
-    title: '(nombre del producto)',
-    price: 30,
-    thumbnail: '(url de la foto del producto)',
+    title: "bag",
+  price: 50,
+  thumbnail:"https://cdns.iconmonstr.com/wp-content/assets/preview/2013/240/iconmonstr-shopping-bag-4.png",
 }).then(maxId => console.log('Ultimo Id', maxId))
 
-file.getById(3).then(obj => console.log('Objeto buscado es', obj))
+// file.getById(1).then(obj => console.log('Objeto buscado es', obj))
 
-file.getAll().then(obj => console.log('La lista de productos es', obj))
+// file.getAll().then(obj => console.log('La lista de productos es', obj))
 
-file.deleteById(3)
+// file.deleteById(1)
 
-file.deleteAll()
+// file.deleteAll()
