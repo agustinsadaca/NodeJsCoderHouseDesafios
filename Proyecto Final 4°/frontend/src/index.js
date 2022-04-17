@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import SignUp from './components/Login/SignUp';
+import Login from './components/Login/Login';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter,
@@ -15,6 +16,9 @@ import {
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
+      <Route path="/" element={<App />} />
+        <Route path="login" element={<Login />} />
+      <Route/>
       <Route path="/" element={<App />} />
         <Route path="registrarse" element={<SignUp />} />
       <Route/>
