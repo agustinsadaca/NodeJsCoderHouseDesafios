@@ -26,8 +26,11 @@ export default function(io){
 	
 	 socket.on('messageFront',async (data) => {
 		 const mess = new Message()
-		 const id_user =await mess.readOne(email,data.user)
-		 const messSave = await mess.save({email:data.user,message:data.message,date:date,timestamp_message:Date.now()})
+		 const id_user = await mess.readOne("email",data.user)
+		 console.log("asd");
+		 console.log(data.user);
+		 console.log(id_user);
+		 const messSave = await mess.save({email:data.user,message:data.message,timestamp_message:Date.now()})
 		 
 		 io.sockets.emit('messageBackend', messGetAll)
 	 })
