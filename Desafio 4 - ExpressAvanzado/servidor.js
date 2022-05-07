@@ -24,7 +24,6 @@ routerProducto.get("/:id", (req, res, next) => {
 });
 
 routerProducto.post('/', (req, res) => {
-	// url http://localhost:8080/
 	const  {title,thumbnail,price}  = req.body
 
 	const file = new Contenedor()
@@ -63,7 +62,7 @@ routerProducto.delete('/:id', (req, res) => {
 		ProductoConIdBorrado:id,
 	})
 })
-app.use('/api/productos', routerProducto) //Nueva linea
+app.use('/api/productos', routerProducto) 
 const PORT = 8080;
 
 const server = app.listen(PORT, () => {

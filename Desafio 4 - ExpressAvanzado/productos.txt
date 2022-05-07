@@ -19,16 +19,8 @@
     "id": 3,
     "producto": {
       "title": "regla",
-      "price": 41,
+      "price": 90,
       "thumbnail": "http://1.bp.blogspot.com/-oliQTb5vfmM/Tg6A4u0AWNI/AAAAAAAAAAQ/E31V1mM7GR8/s1600/regla.png"
-    }
-  },
-  {
-    "id": 4,
-    "producto": {
-      "title": "qwe",
-      "price": "1313",
-      "thumbnail": "addddd"
     }
   }
 ]
