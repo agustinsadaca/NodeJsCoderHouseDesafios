@@ -191,7 +191,8 @@ routerCarrito.delete('/:id/productos/:idProd', (req, res) => {
 app.use('/api/productos', routerProducto) 
 app.use('/api/carritos', routerCarrito) 
 
-const PORT = 8080;
+const PORT = process.env.PORT;
+
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);
