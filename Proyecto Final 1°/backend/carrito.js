@@ -8,27 +8,15 @@ const fs = require('fs')
             .readFile('./backend/carrito.json', 'utf-8')
             .then((data) => {
                 const carrito = JSON.parse(data)
-                if (Object.keys(carrito).length === 0) {
-                    carritoItem['idCarrito'] = 1
-                    maxId = 1
-                } else {
-                    carrito.map((carritoItem) =>
-                        carritoItem['idCarrito'] > maxId
-                            ? (maxId = carritoItem['idCarrito'])
-                            : maxId,
-                    )
-                    maxId = ++maxId
-                    carritoItem['idCarrito'] = maxId
-                }
-                carrito.push({'idCarrito':carritoItem['idCarrito'],'timestampCarrito':carritoItem['timestampCarrito'],
-                producto:{'id':carritoItem.producto['id'],
+                carrito[0].productos.push({'id':carritoItem.producto['id'],
                 'timestamp': carritoItem.producto['timestamp'],
                 'nombre': carritoItem.producto['nombre'],
                 'descripcion': carritoItem.producto['descripcion'],
                 'codigo': carritoItem.producto['codigo'],
                 'foto': carritoItem.producto['foto'],
                 'precio': carritoItem.producto['precio'],
-                'stock': carritoItem.producto['stock']}})
+                'stock': carritoItem.producto['stock']})
+
                 
                 fs.writeFile(
                     './backend/carrito.json',
@@ -80,20 +68,22 @@ const fs = require('fs')
         return myObject
     }
 
-    async deleteById(id) {
+    async deleteById(id,idProduct) {
         let listaSinElemento = await fs.promises
             .readFile('./backend/carrito.json', 'utf-8')
             .then((data) => {
                 let myObject = []
                 let idExist = false
                 let carrito = JSON.parse(data)
-                carrito.map((producto) =>
-                    producto['idCarrito'] != id ? myObject.push(producto) : idExist = true,
-                )
-                if(idExist == false){throw new Error('No se ha encontrado producto con dicho ID')}
+                const indexProductToDelete = carrito[0].productos.findIndex(item => item.id === idProduct )
+                const cartUpdated = carrito[0].productos.splice(indexProductToDelete,1)
+                // carrito.map((producto) =>
+                //     producto['idCarrito'] != id ? myObject.push(producto) : idExist = true,
+                // )
+                // if(idExist == false){throw new Error('No se ha encontrado producto con dicho ID')}
                 fs.writeFile(
                     './backend/carrito.json',
-                    JSON.stringify(myObject, null, 2),
+                    JSON.stringify(carrito, null, 2),
                     (error) => {
                         if (error) {
                             console.log(error)

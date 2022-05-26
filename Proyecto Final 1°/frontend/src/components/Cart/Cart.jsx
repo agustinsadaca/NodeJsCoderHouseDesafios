@@ -5,30 +5,30 @@ import CartItems from "./CartItems";
 
 function Cart(props) {
   const [cartItems, setcartItems] = useState([]);
+  const [cartProperties, setCartProperties] = useState([]);
   const [loading, setloading] = useState(false);
   useEffect(() => {
     setloading(true);
-    axios.get("http://localhost:8080/api/carrito").then((response) => {
-      setcartItems(response.data);
+    axios.get("http://localhost:8080/api/carritos").then((response) => {
+      setCartProperties(response.data);
+      setcartItems(response.data[0].productos);
       setloading(false);
     });
   }, [setcartItems]);
-
   let listP;
   if (cartItems.length !== 0) {
-    listP = cartItems.map((cartItem) => (
+    listP = cartItems.map((cartItem,index) => (
       <Card>
         <CartItems
           onDelete={setcartItems}
-          key={cartItem.idCarrito}
-          idCarrito={cartItem.idCarrito}
-          timestampCarrito={cartItem.timestampCarrito}
-          descripcion={cartItem.producto.descripcion}
-          foto={cartItem.producto.foto}
-          precio={cartItem.producto.precio}
-          stock={cartItem.producto.stock}
-          codigo={cartItem.producto.codigo}
-          nombre={cartItem.producto.nombre}
+          idCarrito={cartProperties[0]}
+          idProducto={cartItem.id}
+          itemId={index}
+          foto={cartItem.foto}
+          precio={cartItem.precio}
+          stock={cartItem.stock}
+          codigo={cartItem.codigo}
+          nombre={cartItem.nombre}
         ></CartItems>
       </Card>
     ));

@@ -71,6 +71,7 @@ app.get('/', (req, res) => {
 routerProducto.put('/:id', (req, res) => {
 
 	const  { timestamp, nombre, descripcion, codigo, foto, precio, stock,admin}  = req.body
+
 	const {id} = req.params 
 	if (admin){
 	const producto = new Producto();
@@ -121,18 +122,22 @@ routerCarrito.post('/', (req, res) => {
 	// {
 	// 	"timestampCarrito":1631072864163,
 	// 	"producto":{
-	// 		"timestamp": 1631072864163,
-	// 		"nombre": "reg",
-	// 		"descripcion": "descripcion",
-	// 		"codigo": "codigo",
-	// 		"foto": "foto",
-	// 		"precio": 20,
-	// 		"stock": 30
+	// 		 {
+	// 	"id": 2,
+	// 	"timestamp": 1631072864163,
+	// 	"nombre": "globo terraqueo",
+	// 	"descripcion": "elemento geografico",
+	// 	"codigo": 1515,
+	// 	"foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+	// 	"precio": 14,
+	// 	"stock": 14
+	// }
 	// }}
 	const file = new Carrito()
 	file.save({
 		  timestampCarrito:timestampCarrito,
 			producto:{
+			id:id,
 			timestamp: timestamp,
 			nombre: nombre,
 			descripcion: descripcion,
@@ -170,10 +175,11 @@ routerCarrito.put('/:idCarrito', (req, res) => {
 	}))		
 })
 
-routerCarrito.delete('/:id', (req, res) => {
-	const {id} = req.params 
+routerCarrito.delete('/:id/productos/:idProd', (req, res) => {
+	const {id,idProd} = req.params 
+	console.log(id, idProd);
 	const producto = new Carrito();
-	producto.deleteById(id)
+	producto.deleteById(id,idProd)
 	res.json({
 		ProductoConIdBorrado:id,
 	})
@@ -183,7 +189,7 @@ routerCarrito.delete('/:id', (req, res) => {
 // app.options('*', cors());
 
 app.use('/api/productos', routerProducto) 
-app.use('/api/carrito', routerCarrito) 
+app.use('/api/carritos', routerCarrito) 
 
 const PORT = 8080;
 
