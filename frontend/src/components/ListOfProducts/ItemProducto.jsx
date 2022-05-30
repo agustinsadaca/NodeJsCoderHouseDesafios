@@ -10,14 +10,14 @@ const ItemProducto = (props) => {
     seteditModalVisivility(true);
   };
   const deleteProduct = (params) => {
-    axios.delete(`http://localhost:8080/api/productos/${props.id}`,{data:{admin:true}})
+    axios.delete(`https://thin-sulky-lemongrass.glitch.me/api/productos/${props.id}`,{data:{admin:true}})
     window.location.reload()
   };
   const hideEditModal = (params) => {
     seteditModalVisivility(false);
   };
   const addCartItem =async (params) => {
-    const saveCartItem = await axios.post(`http://localhost:8080/api/carritos`,{
+    const saveCartItem = await axios.post(`https://thin-sulky-lemongrass.glitch.me/api/carritos`,{
       timestampCarrito:Date.now(),
       producto:{
       "id": props.id,

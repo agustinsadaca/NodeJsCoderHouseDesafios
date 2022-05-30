@@ -9,7 +9,7 @@ function Cart(props) {
   const [loading, setloading] = useState(false);
   useEffect(() => {
     setloading(true);
-    axios.get("http://localhost:8080/api/carritos").then((response) => {
+    axios.get("https://thin-sulky-lemongrass.glitch.me/api/carritos").then((response) => {
       setCartProperties(response.data);
       setcartItems(response.data[0].productos);
       setloading(false);

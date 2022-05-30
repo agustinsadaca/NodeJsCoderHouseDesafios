@@ -15,7 +15,7 @@ const ListOfProducts = (props) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/api/productos", {
+      .get("https://thin-sulky-lemongrass.glitch.me/api/productos", {
         mode: "no-cors",
         headers: {
           "Access-Control-Allow-Credentials": true,

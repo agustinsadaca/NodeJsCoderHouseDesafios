@@ -24,7 +24,7 @@ const ProductAdd = (props) => {
     setproductData({...productData,timestamp:timestampp})
   }
   const saveProducto = (params) => {
-    const res =  axios.post(`http://localhost:8080/api/productos`,{
+    const res =  axios.post(`https://thin-sulky-lemongrass.glitch.me/api/productos`,{
       "timestamp": productData.timestamp,
       "nombre": productData.nombre,
       "descripcion": productData.descripcion,

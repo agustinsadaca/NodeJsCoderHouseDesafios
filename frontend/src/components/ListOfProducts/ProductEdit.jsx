@@ -19,7 +19,7 @@ const ProductEdit = (props) => {
     setproductData({...productData,[event.target.name]:event.target.value})
   }
   const saveProducto = (params) => {
-    const res =  axios.put(`http://localhost:8080/api/productos/${props.id}`,{
+    const res =  axios.put(`https://thin-sulky-lemongrass.glitch.me/api/productos/${props.id}`,{
       "timestamp": productData.timestamp,
       "nombre": productData.nombre,
       "descripcion": productData.descripcion,
