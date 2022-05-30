@@ -1,59 +1,70 @@
-# NodeJsCoderHouseDesafios
+# Getting Started with Create React App
 
-https://coderhousecommerce1.herokuapp.com/api/productos
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-POST 
+## Available Scripts
 
-body:
-{
-    "timestamp": 1631072864163,
-    "nombre": "regla",
-    "descripcion": "elemento de medicion",
-    "codigo": 1515,
-    "foto": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png",
-    "precio": 17,
-    "stock": 18
-}
+In the project directory, you can run:
 
-GET  
-https://coderhousecommerce1.herokuapp.com/api/productos/:id individuales
-o
-https://coderhousecommerce1.herokuapp.com/api/productos todos
+### `npm start`
 
-PUT:
-https://coderhousecommerce1.herokuapp.com/api/productos/:idproducto
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-DELETE:
-https://coderhousecommerce1.herokuapp.com/api/productos/:idproducto
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
--------------------
+### `npm test`
 
-https://coderhousecommerce1.herokuapp.com/api/carrito
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-POST 
+### `npm run build`
 
-body:
-{
-		"timestampCarrito":1631072864163,
-		"producto":{
-			"timestamp": 1631072864163,
-			"nombre": "reg",
-			"descripcion": "descripcion",
-			"codigo": "codigo",
-			"foto": "foto",
-			"precio": 20,
-			"stock": 30
-	}}
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-GET  
-https://coderhousecommerce1.herokuapp.com/api/carrito/:id individuales
-o
-https://coderhousecommerce1.herokuapp.com/api/carrito todos
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-PUT:
-https://coderhousecommerce1.herokuapp.com/api/carrito/:idcarrito
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-DELETE:
-https://coderhousecommerce1.herokuapp.com/api/carrito/:idcarrito
+### `npm run eject`
 
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
