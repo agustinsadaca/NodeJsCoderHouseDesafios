@@ -3,6 +3,7 @@ const cors = require('cors');
 const { Router } = express //Nueva linea
 const { Producto } = require("./productos");
 const { Carrito } = require("./carrito");
+require('dotenv').config();
 
 const app = express();
 app.use(cors({

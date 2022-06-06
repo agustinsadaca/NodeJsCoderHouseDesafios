@@ -14,9 +14,9 @@
     "timestamp": 1631072864163,
     "nombre": "globo terraqueo",
     "descripcion": "elemento geografico",
-    "codigo": "1530",
+    "codigo": 1515,
     "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
-    "precio": 14,
-    "stock": 14
+    "precio": 390,
+    "stock": 390
   }
 ]
