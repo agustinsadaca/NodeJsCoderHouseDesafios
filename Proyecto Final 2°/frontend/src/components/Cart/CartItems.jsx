@@ -4,9 +4,10 @@ import classes from "./Cart.module.css";
 
 function CartItems(props) {
   const deleteCartItem = (params) => {
-    axios.delete(`http://localhost:8080/api/carrito/${props.idCarrito}`);
+    axios.delete(`http://localhost:8080/api/carritos/${props.idCarrito}/productos/${props.idProducto}`);
     props.onDelete((cart)=>{
-      const cartFiltered = cart.filter(item=>item.idCarrito!==props.idCarrito)
+      const cart1 = cart
+      const cartFiltered = cart.filter((item,index)=>index!==props.itemId)
       return [...cartFiltered]
     });
   };

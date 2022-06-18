@@ -1,44 +1,44 @@
 import express from "express";
-import cors from 'cors';
-import  Router from 'express' 
-import  Producto from "./services/producto.js";
-import  Carrito from "./services/carrito.js";
- 
+import cors from "cors";
+import Router from "express";
+// import  ProductoDaoArchivo from "./daos/daosMongodb/productoDaoMongoDb.js";
+import { producto, carrito } from "./daos/index.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-app.use(cors({
-  origin: '*'
-}));
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-
-const routerProducto= new Router() 
-const routerCarrito= new Router() 
+const routerProducto = new Router();
+const routerCarrito = new Router();
 /* -------------------------------------------------------------------------- */
 /*                                  Productos                                 */
 /* -------------------------------------------------------------------------- */
 
-routerProducto.get("/", (req, res, next) => {
-  const producto = new Producto();
-  producto.readAll().then((obj) =>{
-    
-    res.send(obj)
-	})
+routerProducto.get("/", async (req, res, next) => {
+  const listaDeProductos = producto.readAll().then((obj) => {
+    res.send(obj);
+  });
 });
 
 routerProducto.get("/:id", (req, res, next) => {
- 
-	const {id} = req.params 
-  const producto = new Producto();
+  const { id } = req.params;
   producto.readOne(id).then((obj) => {
     res.send(obj);
   });
 });
 
-routerProducto.post('/', (req, res) => {
-	const  { timestamp, nombre, descripcion, codigo, foto, precio, stock, admin}  = req.body
-	// {
+routerProducto.post("/", (req, res) => {
+  const { timestamp, nombre, descripcion, codigo, foto, precio, stock, admin } =
+    req.body;
+  // {
   //   "timestamp": 1631072864163,
   //   "nombre": "regla",
   //   "descripcion": "elemento de medicion",
@@ -47,151 +47,170 @@ routerProducto.post('/', (req, res) => {
   //   "precio": 14,
   //   "stock": 14
   // }
-	if (admin){
+  if (admin) {
+    producto
+      .createProducto({
+        timestamp: timestamp,
+        nombre: nombre,
+        descripcion: descripcion,
+        codigo: codigo,
+        foto: foto,
+        precio: precio,
+        stock: stock,
+      })
+      .then((maxId) => res.redirect("/api/productos/" + maxId));
+  } else {
+    res.send({
+      error: -1,
+      descripcion: "ruta api/productos método post/save no autorizada",
+    });
+  }
+});
 
-	const file = new Producto()
-	file.createProducto({
-			
-			timestamp: timestamp,
-			nombre: nombre,
-			descripcion: descripcion,
-			codigo: codigo,
-			foto: foto,
-			precio: precio,
-			stock: stock,
-	}).then(maxId => res.redirect("/api/productos/" + maxId))
- }else{
-	 res.send({error : -1, descripcion: 'ruta api/productos método post/save no autorizada'})
- }
-})
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
-app.get('/', (req, res) => {
-	
-	res.sendFile(__dirname + '/index.html')
-})
-routerProducto.put('/:id', (req, res) => {
+routerProducto.put("/:id", (req, res) => {
+  const { timestamp, nombre, descripcion, codigo, foto, precio, stock, admin } = req.body;
+  const { id } = req.params;
+  if (admin) {
+    producto
+      .update(id, {
+        timestamp,
+        nombre,
+        descripcion,
+        codigo,
+        foto,
+        precio,
+        stock,
+      })
+      .catch((data) =>
+        res.json({
+          idProductoEditado: id,
+        })
+      );
+  } else {
+    res.send({
+      error: -2,
+      descripcion: "ruta api/productos método put/update no autorizada",
+    });
+  }
+});
 
-	const  { timestamp, nombre, descripcion, codigo, foto, precio, stock,admin}  = req.body
-	const {id} = req.params 
-	if (admin){
-	const producto = new Producto();
-  producto.update(id, { timestamp, nombre, descripcion, codigo, foto, precio, stock}).catch(data => res.json({
-		idProductoEditado:id
-	
-	}))		
-	}else{
-		res.send({error : -2, descripcion: 'ruta api/productos método put/update no autorizada'})
-	}
-})
-
-routerProducto.delete('/:id', (req, res) => {
-	const {id} = req.params 
-	const {admin}  = req.body
-	if (admin){
-	const producto = new Producto();
-	producto.deleteProducto(id)
-	res.json({
-		ProductoConIdBorrado:id,
-	})
-	}else{
-		res.send({error : -3, descripcion: 'ruta api/productos método delete no autorizada'})
-	}
-})
+routerProducto.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  const { admin } = req.body;
+  if (admin) {
+    producto.deleteProducto(id);
+    res.json({
+      ProductoConIdBorrado: id,
+    });
+  } else {
+    res.send({
+      error: -3,
+      descripcion: "ruta api/productos método delete no autorizada",
+    });
+  }
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                   Carrito                                  */
 /* -------------------------------------------------------------------------- */
 routerCarrito.get("/", (req, res, next) => {
-  const producto = new Carrito();
-  producto.readAll().then((obj) =>{
-    res.send(obj)
-	})
-});
-
-routerCarrito.get("/:id", (req, res, next) => {
-	const {id} = req.params 
-  const producto = new Carrito();
-  producto.readOne(id).then((obj) => {
+  carrito.readAll().then((obj) => {
     res.send(obj);
   });
 });
 
-routerCarrito.post('/', (req, res) => {
-	const { timestampCarrito ,producto} = req.body
-	const  {id, timestamp, nombre, descripcion, codigo, foto, precio, stock}  = producto
-	// {
-	// 	"timestampCarrito":1631072864163,
-	// 	"producto":{
-	// 		"timestamp": 1631072864163,
-	// 		"nombre": "reg",
-	// 		"descripcion": "descripcion",
-	// 		"codigo": "codigo",
-	// 		"foto": "foto",
-	// 		"precio": 20,
-	// 		"stock": 30
-	// }}
-	const file = new Carrito()
-	file.createCarrito({
-		  timestampCarrito:timestampCarrito,
-			producto:{
-			timestamp: timestamp,
-			nombre: nombre,
-			descripcion: descripcion,
-			codigo: codigo,
-			foto: foto,
-			precio: precio,
-			stock: stock,
-	}}).then(maxId =>{res.send(maxId)})
-})
+routerCarrito.get("/:id", (req, res, next) => {
+  const { id } = req.params;
+  carrito.readOne(id).then((obj) => {
+    res.send(obj);
+  });
+});
 
-app.get('/', (req, res) => {
-	
-	res.sendFile(__dirname + '/index.html')
-})
-routerCarrito.put('/:idCarrito', (req, res) => {
+routerCarrito.post("/", (req, res) => {
+  const { timestampCarrito, producto } = req.body;
+  const { id, timestamp, nombre, descripcion, codigo, foto, precio, stock } =
+    producto;
+  // {
+  // 	"timestampCarrito":1631072864163,
+  // 	"producto":{
+  // 		"timestamp": 1631072864163,
+  // 		"nombre": "reg",
+  // 		"descripcion": "descripcion",
+  // 		"codigo": "codigo",
+  // 		"foto": "foto",
+  // 		"precio": 20,
+  // 		"stock": 30
+  // }}
+  
+  carrito
+    .createCarrito({
+      timestampCarrito: timestampCarrito,
+      producto: {
+        timestamp: timestamp,
+        nombre: nombre,
+        descripcion: descripcion,
+        codigo: codigo,
+        foto: foto,
+        precio: precio,
+        stock: stock,
+      },
+    })
+    .then((maxId) => {
+      res.send(maxId);
+    });
+});
 
-	const { timestampCarrito ,producto} = req.body
-	const  {id, timestamp, nombre, descripcion, codigo, foto, precio, stock}  = producto
-	const {idCarrito} = req.params 
-	const idCarr = idCarrito
-	const carrito = new Carrito();
-	carrito.update(idCarr, {
-	timestampCarrito:timestampCarrito,
-		producto:{
-		timestamp: timestamp,
-		nombre: nombre,
-		descripcion: descripcion,
-		codigo: codigo,
-		foto: foto,
-		precio: precio,
-		stock: stock,
-	}}).catch(data => res.json({
-		idProductoEditado:id
-	
-	}))		
-})
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
-routerCarrito.delete('/:id', (req, res) => {
-	const {id} = req.params 
-	const producto = new Carrito();
-	producto.deleteCarrito(id)
-	res.json({
-		ProductoConIdBorrado:id,
-	})
-})
+routerCarrito.put("/:idCarrito", (req, res) => {
+  const { timestampCarrito, producto } = req.body;
+  const { id, timestamp, nombre, descripcion, codigo, foto, precio, stock } =
+    producto;
+  const { idCarrito } = req.params;
+  const idCarr = idCarrito;
+  carrito
+    .update(idCarr, {
+      timestampCarrito: timestampCarrito,
+      producto: {
+        timestamp: timestamp,
+        nombre: nombre,
+        descripcion: descripcion,
+        codigo: codigo,
+        foto: foto,
+        precio: precio,
+        stock: stock,
+      },
+    })
+    .catch((data) =>
+      res.json({
+        idProductoEditado: id,
+      })
+    );
+});
 
+routerCarrito.delete("/:id/:idProd", (req, res) => {
+  const { id, idProd } = req.params;
+  carrito.deleteCarrito(id,idProd);
+  res.json({
+    ProductoConIdBorrado: id,
+  });
+});
 
 // app.options('*', cors());
 
-app.use('/api/productos', routerProducto) 
-app.use('/api/carrito', routerCarrito) 
+app.use("/api/productos", routerProducto);
+app.use("/api/carritos", routerCarrito);
 
 const PORT = 8080;
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);
 });
-
-
 
 server.on("error", (error) => console.log(error));

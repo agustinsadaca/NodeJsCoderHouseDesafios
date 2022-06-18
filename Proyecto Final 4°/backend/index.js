@@ -8,8 +8,8 @@ import passport from "passport"
 import emoji from 'node-emoji'
 import UserRouter from './routers/userRoutes.js'
 import MessageRouter from './controllers/message.controller.js'
-// import routerProducto from './routers/productos.route.js'
-// import routerCarrito from './routers/carrito.route.js'
+import routerProducto from './routers/productos.route.js'
+import routerCarrito from './routers/carrito.route.js'
 import cookieParser from 'cookie-parser'
 import "./strategies/JwtStrategy.js"
 import  "./strategies/LocalStrategy.js"
@@ -49,8 +49,8 @@ app.use(passport.session())
 
 app.use('/user', UserRouter)
 
-// app.use('/api/productos', routerProducto) 
-// app.use('/api/carrito', routerCarrito) 
+app.use('/api/productos', routerProducto) 
+app.use('/api/carrito', routerCarrito) 
 
 app.engine(
 	'hbs',

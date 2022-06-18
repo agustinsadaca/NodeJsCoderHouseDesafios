@@ -1,15 +1,14 @@
-import "../db.js";
-import { CarritoModel } from "../models/carrito.models.js";
+import "../../db.js";
+import { ProductosModel } from "../../models/productos.models.js";
 
 /* -------------------------------------------------------------------------- */
-/*                                   Carrito                                  */
+/*                                  Productos                                 */
 /* -------------------------------------------------------------------------- */
-
-class Carrito {
+class Producto {
   constructor() {}
-  async createCarrito(carrito) {
+  async createProducto(producto) {
     try {
-      const response = await CarritoModel.create(carrito);
+      const response = await ProductosModel.create(producto);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -20,7 +19,7 @@ class Carrito {
 
   async readAll() {
     try {
-      const response = await CarritoModel.find();
+      const response = await ProductosModel.find();
       console.log(response);
       return(response);
     } catch (error) {
@@ -30,16 +29,15 @@ class Carrito {
 
   // readAll()
 
-  async update(id,carrito) {
-    const { timestampCarrito,producto} = carrito
+  async update(id,producto) {
     const {timestamp, nombre, descripcion, codigo, foto, precio, stock} = producto
     try {
-      const response = await CarritoModel.updateOne(
+      const response = await ProductosModel.updateOne(
         { _id:id },
-        {timestampCarrito:timestampCarrito, producto:{timestamp:timestamp, nombre:nombre, descripcion:descripcion, codigo:codigo, foto:foto, precio:precio, stock:stock} }
+        { timestamp:timestamp, nombre:nombre, descripcion:descripcion, codigo:codigo, foto:foto, precio:precio, stock:stock }
       );
       console.log(response);
-      return id
+      return 
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +46,7 @@ class Carrito {
 
   async readOne(id) {
     try {
-      const response = await CarritoModel.findOne({ _id:id });
+      const response = await ProductosModel.findOne({ _id:id });
       console.log(response);
       return response
     } catch (error) {
@@ -58,14 +56,16 @@ class Carrito {
 
   // readOne()
 
-  async deleteCarrito(id) {
+  async deleteProducto(id) {
     try {
-      const response = await CarritoModel.deleteOne({ _id:id });
+      const response = await ProductosModel.deleteOne({ _id:id });
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   }
-}
 
-export default Carrito;
+ 
+}
+export default Producto
+

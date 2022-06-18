@@ -6,7 +6,7 @@ const Schema = mongoose.Schema({
 		required: true,
 		
 	},
-	producto:{
+	producto:[{
 		timestamp: {
 			type: Number,
 			required: true,
@@ -38,7 +38,7 @@ const Schema = mongoose.Schema({
 		stock: {
 			type: Number,
 			required: true,
-		}}
+		}}]
 })
 
 
