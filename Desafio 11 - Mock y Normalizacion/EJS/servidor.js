@@ -45,7 +45,9 @@ io.on("connection", async (socket) => {
   /* -------------------------------------------------------------------------- */
   
   const messGetAll = await mess.getAll().then(data=>{
+
   const user = new schema.Entity("user");
+  
   const comment = new schema.Entity("comment", {
     author: user,
   });
