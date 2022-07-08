@@ -12,3 +12,7 @@
 input{
   color:#333  ;
 }
+.inputLogin{
+  white-space: nowrap;
+  overflow: hidden;
+}

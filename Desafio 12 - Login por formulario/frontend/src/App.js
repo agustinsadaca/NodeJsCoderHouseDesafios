@@ -43,8 +43,8 @@ function App() {
   return (
     <div className="App App-header">
       <div className="headerName">
-        <h1 className="nombre">{location.state}</h1>
-        <a  className="deslogueo" onClick={deleteCookie}>Desloguearse</a>
+        <h1 className="nombre">Bienvenido {location.state}</h1>
+        <a  className="deslogueo"  onClick={deleteCookie}>Desloguearse</a>
       </div>
       <button className="cart" onClick={allowCartVisibility}>
         Carrito
