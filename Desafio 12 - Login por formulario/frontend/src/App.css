@@ -25,13 +25,22 @@
 }
 .cart{
   color: white;
-  margin-left: auto;
+  margin-left: 80%;
   
 }
 .App-link {
   color: #61dafb;
 }
-
+.headerName{
+  display: flex;
+  justify-content: flex-start;
+}
+.nombre{
+  justify-content: space-around;
+}
+.deslogueo{
+  justify-content:center;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import SignUp from './components/Login/SignUp';
 import Login from './components/Login/Login';
+import Deslogueo from './components/Login/Deslogueo';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter,
@@ -22,6 +23,8 @@ ReactDOM.render(
       <Route path="/" element={<App />} />
         <Route path="registrarse" element={<SignUp />} />
       <Route/>
+      <Route path="deslogueo" element={<Deslogueo />} />
+
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
