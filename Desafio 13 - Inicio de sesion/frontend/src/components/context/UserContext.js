@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 
-// const UserContext = React.createContext([{}, () => {}]);
-export const UserContext = React.createContext({token:"", setToken:()=>{}});
+const UserContext = React.createContext([{}, () => {}]);
 
-let initialState = "";
+let initialState = {};
 
 const UserProvider = (props) => {
-  const [userRefreshToken, setUserRefreshToken] = useState(initialState);
+  const [state, setState] = useState(initialState);
 
   return (
-    <UserContext.Provider value={{token:userRefreshToken, setToken: setUserRefreshToken}}>
+    <UserContext.Provider value={[state, setState]}>
       {props.children}
     </UserContext.Provider>
   );
 };
 
-
+export { UserContext, UserProvider };

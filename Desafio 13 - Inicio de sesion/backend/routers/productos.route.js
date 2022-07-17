@@ -11,7 +11,7 @@ const routerProducto = express.Router()
 /*                                  Productos                                 */
 /* -------------------------------------------------------------------------- */
 
-routerProducto.get("/",  auth.verifyUser,(req, res, next) => {
+routerProducto.get("/",(req, res, next) => {
   const producto = new Producto();
   producto.readAll().then((obj) =>{
     

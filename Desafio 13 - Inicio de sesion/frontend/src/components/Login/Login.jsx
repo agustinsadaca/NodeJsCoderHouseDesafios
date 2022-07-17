@@ -2,17 +2,20 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import Input from "../UI/Input";
 import classes from "./login.module.css";
-import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
-import  {UserContext} from "../context/UserContext.js";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext.js";
 
 const Login = (props) => {
   const [userData, setUserData] = useState({
     user: "",
     password: "",
   });
+  let location = useLocation();
+  let navigate = useNavigate();
+
   const [dat, setDat] = useState("");
-  const ctx = useContext(UserContext);
+  const [userContext, setUserContext] = useContext(UserContext);
 
   const handleDataChange = (event) => {
     setUserData({ ...userData, [event.target.name]: event.target.value });
@@ -25,8 +28,8 @@ const Login = (props) => {
     // });
     const res = axios
       .post(
-        `http://localhost:8080/user/login`,JSON.stringify(
-        {
+        `http://localhost:8080/user/login`,
+        JSON.stringify({
           username: userData.user,
           password: userData.password,
         }),
@@ -34,8 +37,8 @@ const Login = (props) => {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-          }
+            "Access-Control-Allow-Origin": "http://localhost:8080",
+          },
         }
       )
       .then(async (response) => {
@@ -47,13 +50,18 @@ const Login = (props) => {
           } else {
             const data = await response;
             setDat(response.data.token);
-            ctx.setToken(()=>response.data.token)
-           
+            setUserContext((oldValues) => {
+              return { ...oldValues, token: response.data.token };
+            });
+            const storedUserLoggedInInformation = localStorage.setItem(
+              "token",
+              response.data.token
+            );
+              console.log(response);
+            navigate("/",{ state: userData.user });
           }
         }
       });
-
-    // window.open(`http://localhost:8080/login?username=${userData.user}&password=${userData.password}`,"_self")
   };
   return (
     <div className="App App-header">
