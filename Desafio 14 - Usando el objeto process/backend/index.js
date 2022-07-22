@@ -55,7 +55,7 @@ app.use('/user', UserRouter);
 
 app.use('/api/productos', routerProducto);
 app.use('/api/carrito', routerCarrito);
-app.use('/info', routerInfo);
+app.use('/api/info', routerInfo);
 
 app.engine(
     'hbs',
@@ -71,6 +71,11 @@ app.set('view engine', 'hbs');
 app.get('/', (req, res) => {
   res.render('main', {
     layout: 'main',
+  });
+});
+app.get('/info', (req, res) => {
+  res.render('config', {
+    layout: 'config',
   });
 });
 const httpServer = createServer(app);
