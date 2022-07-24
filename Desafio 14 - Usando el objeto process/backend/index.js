@@ -11,6 +11,7 @@ import MessageRouter from './controllers/message.controller.js';
 import routerProducto from './routers/productos.route.js';
 import routerCarrito from './routers/carrito.route.js';
 import routerInfo from './routers/info.router.js';
+import random from './routers/random.route.js';
 import cookieParser from 'cookie-parser';
 import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
@@ -56,6 +57,7 @@ app.use('/user', UserRouter);
 app.use('/api/productos', routerProducto);
 app.use('/api/carrito', routerCarrito);
 app.use('/api/info', routerInfo);
+app.use('/api/random', random);
 
 app.engine(
     'hbs',
@@ -89,6 +91,7 @@ const options = {
   alias: {
     m: 'modo',
     p: 'puerto',
+    
   },
   default: {
     modo: 'prod',
