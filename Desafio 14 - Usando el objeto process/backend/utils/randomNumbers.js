@@ -16,7 +16,6 @@ function calculateRandomNumbers(random) {
       response[existRandomInArray].cantidadRepeticiones += 1;
     }
   }
-  console.log(response.length);
   return response;
 }
 

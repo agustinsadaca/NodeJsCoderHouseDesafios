@@ -22,6 +22,8 @@ import {fileURLToPath} from 'url';
 import {createServer} from 'http';
 import {Server} from 'socket.io';
 import parseArgs from 'minimist';
+import cluster from 'cluster'
+import os from 'os'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -91,19 +93,37 @@ const options = {
   alias: {
     m: 'modo',
     p: 'puerto',
+    f:'fork',
+    c:'cluster'
     
   },
   default: {
     modo: 'prod',
     puerto: 8080,
+    fork:true,
+    cluster:false
   },
 };
 
 const commandLineArgs = process.argv.slice(2);
 const {mod, puerto, _} = parseArgs(commandLineArgs, options);
+console.log(parseArgs(commandLineArgs, options));
 
+const nCpus = os.cpus().length
+
+if (cluster.isMaster) {
+  console.log(`Master PID ${process.pid} is running`)
+  for (let i = 0; i < nCpus; i++) {
+    cluster.fork()    
+  }
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker PID ${worker.process.pid} died`)
+    cluster.fork()    
+  })
+} else {
 const server = httpServer.listen(puerto, () => {
   console.log(`Servidor express corriendo en port ${puerto}`);
 });
 
 server.on('error', (error) => console.log(error));
+}
