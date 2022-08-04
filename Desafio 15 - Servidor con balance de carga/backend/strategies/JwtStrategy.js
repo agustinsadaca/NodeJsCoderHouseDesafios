@@ -9,7 +9,6 @@ opts.secretOrKey = process.env.JWT_SECRET;
 
 // Used by the authenticated requests to deserialize the user,
 // i.e., to fetch user details from the JWT.
-console.log('test');
 passport.use(
     new JwtStrategy(opts, function(jwt_payload, done) {
     // Check against the DB only if necessary.

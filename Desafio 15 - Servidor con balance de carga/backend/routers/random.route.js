@@ -2,6 +2,7 @@ import express from "express";
 import * as auth from "../middlewares/authenticate.js";
 import parseArgs from "minimist";
 import { fork } from "child_process";
+import {cpus} from "os"
 
 const random = express.Router();
 
@@ -15,8 +16,13 @@ random.get("/:random", (req, res, next) => {
 
   forked.on("message", (msg) => {
     if (msg === "listo") {
+      
       forked.send(random);
     } else {
+      msg.nCpus = cpus.length
+      console.log(msg);
+
+
       res.send(msg);
     }
   });
@@ -27,8 +33,11 @@ random.get("/", (req, res, next) => {
 
   forked.on("message", (msg) => {
     if (msg === "listo") {
+    
       forked.send(null);
     } else {
+      msg.nCpus = cpus.length
+      console.log(msg);
       res.send(msg);
     }
   });
