@@ -31,16 +31,16 @@ const __dirname = path.dirname(__filename);
 
 const nCpus = os.cpus().length
 
-if (cluster.isMaster) {
-  console.log(`Master PID ${process.pid} is running`)
-  for (let i = 0; i < nCpus; i++) {
-    cluster.fork()    
-  }
-  cluster.on('exit', (worker, code, signal) => {
-    console.log(`Worker PID ${worker.process.pid} died`)
-    cluster.fork()    
-  })
-} else {
+// if (cluster.isPrimary) {
+//   console.log(`Master PID ${process.pid} is running`)
+//   for (let i = 0; i < nCpus; i++) {
+//     cluster.fork()    
+//   }
+//   cluster.on('exit', (worker, code, signal) => {
+//     console.log(`Worker PID ${worker.process.pid} died`)
+//     cluster.fork()    
+//   })
+// } else {
   const app = express();
   app.use(express.json());
   app.use(express.urlencoded({extended: true}));
@@ -119,10 +119,12 @@ if (cluster.isMaster) {
   };
   
   const commandLineArgs = process.argv.slice(2);
-  const {mod, puerto, _} = parseArgs(commandLineArgs, options);
-const server = httpServer.listen(puerto, () => {
-  console.log(`Servidor express corriendo en port ${puerto}`);
+  // const {mod, puerto, _} = parseArgs(commandLineArgs, options);
+  const PORT = parseInt(process.argv[2]) || 8080
+
+const server = httpServer.listen(PORT, () => {
+  console.log(`Servidor express corriendo en port ${PORT}`);
 });
 
 server.on('error', (error) => console.log(error));
-}
+// }

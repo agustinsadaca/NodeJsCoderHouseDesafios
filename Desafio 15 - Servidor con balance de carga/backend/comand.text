@@ -1,0 +1,36 @@
+
+
+// -------------- MODO FORK -------------------
+//pm2 start ./backend/index.js --name="Server1" --watch -- 8080
+
+// -------------- MODO CLUSTER -------------------
+//pm2 start ./backend/index.js --name="Server2" --watch -i 1 -- 8082
+//pm2 start ./backend/index.js --name="Server3" --watch -i 2 -- 8083
+//pm2 start ./backend/index.js --name="Server4" --watch -i 3 -- 8084
+//pm2 start ./backend/index.js --name="Server5" --watch -i 4 -- 8085
+
+En la carpeta de config de nginx/config guardar el archivo nginx.config
+En cmd dentro de la carpeta de nginx:
+
+//start nginx
+//tasklist /fi "imagename eq nginx.exe"      //para checkear q los procesos esten activos
+
+para /api/random se redirige a los cluster de los puertos 8082, 8083, 8084, 8085
+resto de las consultas en el puerto 8080
+
+
+
+# ---------------------------------------------------------------------------- #
+#                                Otros comandos                                #
+# ---------------------------------------------------------------------------- #
+
+//pm2 list
+//pm2 delete id/name
+//pm2 desc name
+//pm2 monit
+//pm2 --help
+//pm2 logs
+//pm2 flush
+
+//nginx -s reload
+//nginx -s quit
