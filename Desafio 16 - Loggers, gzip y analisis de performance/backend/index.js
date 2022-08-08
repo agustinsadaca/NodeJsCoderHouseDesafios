@@ -67,11 +67,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.all('*', (req, res) => {
-  const { url, method } = req
-  logger.warn(`Ruta ${method} ${url} no implementada`)
-  res.send(`Ruta ${method} ${url} no está implementada`)
-})
+
 app.use("/user", UserRouter);
 app.use("/api/productos", routerProducto);
 app.use("/api/carrito", routerCarrito);
@@ -100,6 +96,11 @@ app.get("/info", (req, res) => {
     layout: "config",
   });
 });
+app.all('*', (req, res) => {
+  const { url, method } = req
+  logger.warn(`Ruta ${method} ${url} no implementada`)
+  res.send(`Ruta ${method} ${url} no está implementada`)
+})
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -112,6 +113,7 @@ const PORT = parseInt(process.argv[2]) || 8080;
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);
 });
+server.on('error', error => logger.error(`Error en servidor: ${error}`))
 
-server.on("error", (error) => console.log(error));
+
 // }
