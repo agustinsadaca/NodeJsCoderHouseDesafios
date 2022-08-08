@@ -2,8 +2,7 @@ import express from 'express'
 import * as AuthController from '../controllers/auth.controllerTest.js'
 import * as auth from '../middlewares/authenticate.js'
 import parseArgs from 'minimist';
-
-
+import compression from 'compression'
 
 const routerInfo = express.Router()
 
@@ -11,7 +10,7 @@ const routerInfo = express.Router()
 /*                                  Productos                                 */
 /* -------------------------------------------------------------------------- */
 
-routerInfo.get("/",(req, res, next) => {
+routerInfo.get("/",compression(),(req, res, next) => {
     const {p} = parseArgs(process.argv)
     const processData = {
         argumentoEntrada: p,
