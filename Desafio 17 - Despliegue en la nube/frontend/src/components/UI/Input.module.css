@@ -1,0 +1,30 @@
+.input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.input label {
+  font-weight: bold;
+  margin-right: 1rem;
+  width: 15rem;
+}
+
+.input input {
+  margin: 0 ;
+  width: 30rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font: inherit;
+  padding-left: 0.5rem;
+}
+.inputLogin, select, textarea{
+  color:#282C34;
+}
+input, select, textarea{
+  color: #282C34;
+}
+
+textarea:focus, input:focus {
+  color: #282C34;
+}
