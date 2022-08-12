@@ -1,11 +1,16 @@
 import passport from 'passport';
-import {Strategy as JwtStrategy} from 'passport-jwt';
-import {ExtractJwt as ExtractJwt} from 'passport-jwt';
-import {UserModel as User} from '../models/user.model.js';
+import {
+  ExtractJwt,
+  Strategy as JwtStrategy,
+} from 'passport-jwt';
+
+import { UserModel as User } from '../models/user.model.js';
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET;
+console.log("Antes");
+console.log(process.env.JWT_SECRET);
 
 // Used by the authenticated requests to deserialize the user,
 // i.e., to fetch user details from the JWT.
