@@ -1,6 +1,7 @@
-# NodeJsCoderHouseDesafios
-
+#HerokuConfig
 git subtree push --prefix "Desafio 17 - Despliegue en la nube"  heroku master
+heroku logs --tail 
+# NodeJsCoderHouseDesafios
 
 https://coderhousecommerce1.herokuapp.com/api/productos
 
