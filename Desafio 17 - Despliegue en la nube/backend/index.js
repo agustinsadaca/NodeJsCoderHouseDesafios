@@ -1,30 +1,26 @@
-import express from "express";
-import cors from "cors";
-import Router from "express";
-import Producto from "./services/producto.js";
-import Carrito from "./services/carrito.js";
-import session from "express-session";
-import passport from "passport";
-import emoji from "node-emoji";
-import UserRouter from "./routers/userRoutes.js";
-import MessageRouter from "./controllers/message.controller.js";
-import routerProducto from "./routers/productos.route.js";
-import routerCarrito from "./routers/carrito.route.js";
-import routerInfo from "./routers/info.router.js";
-import random from "./routers/random.route.js";
-import cookieParser from "cookie-parser";
-import "./strategies/JwtStrategy.js";
-import "./strategies/LocalStrategy.js";
-import "./middlewares/authenticate.js";
-import handlebars from "express-handlebars";
-import path from "path";
-import { fileURLToPath } from "url";
-import { createServer } from "http";
-import { Server } from "socket.io";
-import parseArgs from "minimist";
-import cluster from "cluster";
-import os from "os";
-import logger from "./utils/logger.js";
+import './strategies/JwtStrategy.js';
+import './strategies/LocalStrategy.js';
+import './middlewares/authenticate.js';
+
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express from 'express';
+import handlebars from 'express-handlebars';
+import session from 'express-session';
+import { createServer } from 'http';
+import os from 'os';
+import passport from 'passport';
+import path from 'path';
+import { Server } from 'socket.io';
+import { fileURLToPath } from 'url';
+
+import MessageRouter from './controllers/message.controller.js';
+import routerCarrito from './routers/carrito.route.js';
+import routerInfo from './routers/info.router.js';
+import routerProducto from './routers/productos.route.js';
+import random from './routers/random.route.js';
+import UserRouter from './routers/userRoutes.js';
+import logger from './utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -108,7 +104,8 @@ const io = new Server(httpServer, {
   },
 });
 const Message = new MessageRouter(io);
-const PORT = parseInt(process.argv[2]) || 8080;
+const PORT = process.env.PORT;
+
 
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);
