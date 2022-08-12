@@ -1,5 +1,8 @@
-import passport from "passport";
-import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
+
+dotenv.config();
 const dev = process.env.NODE_ENV !== "production";
 
 export const COOKIE_OPTIONS = {

@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import passport from 'passport';
 import {
   ExtractJwt,
@@ -5,6 +6,8 @@ import {
 } from 'passport-jwt';
 
 import { UserModel as User } from '../models/user.model.js';
+
+dotenv.config();
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
