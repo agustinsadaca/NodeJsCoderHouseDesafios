@@ -7,8 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./backend/index.js",
-    "start:dev": "nodemon --inspect ./backend/index.js",
-    "build": "react-scripts build"
+    "start:dev": "nodemon --inspect ./backend/index.js"
   },
   "author": "",
   "license": "ISC",
