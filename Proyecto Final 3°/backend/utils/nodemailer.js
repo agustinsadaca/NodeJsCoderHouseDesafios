@@ -38,8 +38,8 @@ const transporterGmail = createTransport({
   service: "gmail",
   port: 587,
   auth: {
-    user: "diegoff@gmail.com",
-    pass: "oukzwglwrkovrnki",
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASSWORD,
   },
 });
 
