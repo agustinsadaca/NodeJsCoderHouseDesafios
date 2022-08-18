@@ -1,9 +1,6 @@
-import express from 'express'
-import * as AuthController from '../controllers/auth.controllerTest.js'
-import Producto from "../services/producto.js";
-import * as auth from '../middlewares/authenticate.js'
+import express from 'express';
 
-
+import Producto from '../services/producto.js';
 
 const routerProducto = express.Router()
 

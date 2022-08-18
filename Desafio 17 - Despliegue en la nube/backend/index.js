@@ -27,16 +27,6 @@ const __dirname = path.dirname(__filename);
 
 const nCpus = os.cpus().length;
 
-// if (cluster.isPrimary) {
-//   console.log(`Master PID ${process.pid} is running`)
-//   for (let i = 0; i < nCpus; i++) {
-//     cluster.fork()
-//   }
-//   cluster.on('exit', (worker, code, signal) => {
-//     console.log(`Worker PID ${worker.process.pid} died`)
-//     cluster.fork()
-//   })
-// } else {
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -62,7 +52,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use("/user", UserRouter);
 app.use("/api/productos", routerProducto);
@@ -92,11 +81,11 @@ app.get("/info", (req, res) => {
     layout: "config",
   });
 });
-app.all('*', (req, res) => {
-  const { url, method } = req
-  logger.warn(`Ruta ${method} ${url} no implementada`)
-  res.send(`Ruta ${method} ${url} no está implementada`)
-})
+app.all("*", (req, res) => {
+  const { url, method } = req;
+  logger.warn(`Ruta ${method} ${url} no implementada`);
+  res.send(`Ruta ${method} ${url} no está implementada`);
+});
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -106,11 +95,9 @@ const io = new Server(httpServer, {
 const Message = new MessageRouter(io);
 const PORT = process.env.PORT;
 
-
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);
 });
-server.on('error', error => logger.error(`Error en servidor: ${error}`))
-
+server.on("error", (error) => logger.error(`Error en servidor: ${error}`));
 
 // }

@@ -31,6 +31,15 @@
 .App-link {
   color: #61dafb;
 }
+.headerName{
+  margin-left: 15%;
+}
+.nombre{
+  display: inline-block;
+}
+.deslogueo{
+  margin-left: 50px;
+}
 
 @keyframes App-logo-spin {
   from {

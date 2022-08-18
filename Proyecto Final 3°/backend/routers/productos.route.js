@@ -1,8 +1,6 @@
-import express from 'express'
-import passport from '../utils/passport.util.js'
-import * as AuthController from '../controllers/auth.controller.js'
-import Producto from "../services/producto.js";
+import express from 'express';
 
+import Producto from '../services/producto.js';
 
 const routerProducto = express.Router()
 
@@ -10,7 +8,7 @@ const routerProducto = express.Router()
 /*                                  Productos                                 */
 /* -------------------------------------------------------------------------- */
 
-routerProducto.get("/", (req, res, next) => {
+routerProducto.get("/",(req, res, next) => {
   const producto = new Producto();
   producto.readAll().then((obj) =>{
     
@@ -19,6 +17,7 @@ routerProducto.get("/", (req, res, next) => {
 });
 
 routerProducto.get("/:id", (req, res, next) => {
+	console.log(req.isAuthenticated());
  
 	const {id} = req.params 
   const producto = new Producto();

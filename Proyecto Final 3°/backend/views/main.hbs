@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Websocket</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+  
+  <h1>Server Coderhouse Backend</h1>
+
+</body>
+<script>
+  const socket = io()
+  
+  const message = document.getElementById("message")
+  const user = document.getElementById("user")
+  const send = document.getElementById("send").addEventListener('click',()=>{
+    socket.emit('messageFront', {'user':user.value,'message':message.value})
+  })
+  socket.on('messageBackend',(data)=>{
+    data = JSON.parse(data)
+    let inner=''
+    data.map((message)=>{
+      inner+=`
+        <li class="listaMensaje">
+          <div class="email text">  ${message.email} </div>
+          <div class="date text">  [${message.date}]:</div>
+          <div class="message text">  ${message.message}</div>
+        </li>
+      `
+    })
+    document.getElementById('messages').innerHTML=inner
+  })
+</script>
+<style>
+  input{
+    display: block;
+    margin: 15px;
+    width: 25rem;
+  }
+  form{width:50%}
+  .listaMensaje{display:flex;}
+  .text{padding:0 3px;}
+  .email{
+    color:blue;
+    font-weight:600;
+  }
+  .date{
+    color:brown;
+  }
+  .message{
+    font-style: italic;
+  }
+  .imagen{width:10%}
+  table{
+    margin: 20px;
+    
+}
+.formStyle{
+  width: 40%;
+}
+.chat{
+  width: 40%;
+}
+.table{
+  width:80%;
+}
+</style>

@@ -1,5 +1,5 @@
-import { createTransport } from "nodemailer";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import { createTransport } from 'nodemailer';
 
 function enviarMail(user) {
   
@@ -34,25 +34,25 @@ sendMailEthereal();
 
 /* ---------------------------------- GMAIL --------------------------------- */
 
-// const transporterGmail = createTransport({
-//   service: "gmail",
-//   port: 587,
-//   auth: {
-//     user: "diegoff@gmail.com",
-//     pass: "oukzwglwrkovrnki",
-//   },
-// });
+const transporterGmail = createTransport({
+  service: "gmail",
+  port: 587,
+  auth: {
+    user: "diegoff@gmail.com",
+    pass: "oukzwglwrkovrnki",
+  },
+});
 
-// async function sendMailGmail() {
-//   try {
-//     const response = await transporterGmail.sendMail(mailOptions);
-//     console.log(response);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+async function sendMailGmail() {
+  try {
+    const response = await transporterGmail.sendMail(mailOptions);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// sendMailGmail();
+sendMailGmail();
 
  }
 

@@ -1,9 +1,6 @@
-import express from 'express'
-import passport from '../utils/passport.util.js'
-import * as AuthController from '../controllers/auth.controller.js'
-import  Producto from "../services/producto.js";
-import  Carrito from "../services/carrito.js";
+import express from 'express';
 
+import Carrito from '../services/carrito.js';
 
 const routerCarrito = express.Router()
 
