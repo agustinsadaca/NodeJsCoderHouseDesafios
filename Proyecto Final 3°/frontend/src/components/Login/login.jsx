@@ -1,12 +1,21 @@
-import React, { useState, useContext } from "react";
-import axios from "axios";
-import Input from "../UI/Input";
-import classes from "./login.module.css";
-import Cookies from "universal-cookie";
-import { useLocation, Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext.js";
+import React, {
+  useContext,
+  useState,
+} from 'react';
+
+import axios from 'axios';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+
+import { UserContext } from '../context/UserContext.js';
+import Input from '../UI/Input';
+import classes from './login.module.css';
 
 const Login = (props) => {
+  // localStorage.setItem("admin",false)
   const [userData, setUserData] = useState({
     user: "",
     password: "",
@@ -49,6 +58,7 @@ const Login = (props) => {
             console.log("Invalid email and password combination.");
           } else {
             const data = await response;
+            localStorage.setItem("admin",response.data.admin)
             setDat(response.data.token);
             setUserContext((oldValues) => {
               return { ...oldValues, token: response.data.token };

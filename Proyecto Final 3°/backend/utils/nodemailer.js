@@ -14,8 +14,8 @@ const transporter = createTransport({
 });
 
 const mailOptions = {
-  from: "no-reply@c2140416.ferozo.com",
-  to: ["no-reply@c2140416.ferozo.com",user.email],
+  from: process.env.GMAIL_USER,
+  to: [process.env.GMAIL_USER,user.email],
   subject: "Nueva subscripcion",
   html: `<h1>Nueva subscripcion ecommerce CoderHouse, usuario ${user.username}, ${user.firstName}, ${user.lastName}</h1>`,
   
@@ -30,7 +30,7 @@ async function sendMailEthereal() {
   }
 }
 
-sendMailEthereal();
+// sendMailEthereal();
 
 /* ---------------------------------- GMAIL --------------------------------- */
 
@@ -56,4 +56,4 @@ sendMailGmail();
 
  }
 
-export default {enviarMail};
+export default enviarMail;

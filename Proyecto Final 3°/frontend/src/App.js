@@ -1,13 +1,21 @@
-import "./App.css";
-import React, { Fragment, useState, useContext, useEffect } from "react";
-import ListOfProducts from "./components/ListOfProducts/ListOfProducts";
-import Cart from "./components/Cart/Cart";
-import Modal from "./components/UI/Modal";
-import Login from "./components/Login/Login";
-import { UserContext } from "./components/context/UserContext";
-import axios from "axios";
-import CheckAuth from "./components/Login/CheckAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import './App.css';
+
+import React, {
+  Fragment,
+  useContext,
+  useState,
+} from 'react';
+
+import {
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+
+import Cart from './components/Cart/Cart';
+import { UserContext } from './components/context/UserContext';
+import ListOfProducts from './components/ListOfProducts/ListOfProducts';
+import CheckAuth from './components/Login/CheckAuth';
+import Modal from './components/UI/Modal';
 
 function App() {
   const [cartVisibility, setcartVisibility] = useState(false);
@@ -15,7 +23,6 @@ function App() {
   const [userContext, setUserContext] = useContext(UserContext);
   let navigate = useNavigate();
   let location = useLocation();
-
 
   const allowCartVisibility = (params) => {
     setcartVisibility(true);
@@ -35,9 +42,10 @@ function App() {
     }
   };
   const deleteToken = () => {
-    const storedUserLoggedInInformation = localStorage.setItem('token',"" );
-    navigate("/login")
-  }
+    localStorage.setItem("admin",false)
+    localStorage.setItem("token", "");
+    navigate("/login");
+  };
 
   return (
     <CheckAuth>
@@ -52,7 +60,7 @@ function App() {
           <button className="cart" onClick={allowCartVisibility}>
             Carrito
           </button>
-          {cartVisible}
+          {cartVisible()}
           <ListOfProducts className="App-header" />
         </div>
       </div>

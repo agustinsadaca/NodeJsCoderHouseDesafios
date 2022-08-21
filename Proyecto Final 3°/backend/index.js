@@ -57,7 +57,7 @@ app.use(passport.session());
 
 app.use("/user", UserRouter);
 app.use("/api/productos", routerProducto);
-app.use("/api/carrito", routerCarrito);
+app.use("/api/shoppingcartproducts", routerCarrito);
 app.use("/api/info", routerInfo);
 app.use("/api/random", random);
 

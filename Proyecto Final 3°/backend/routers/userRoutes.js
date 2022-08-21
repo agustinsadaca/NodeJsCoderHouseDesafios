@@ -9,6 +9,7 @@ import {
   verifyUser,
 } from '../middlewares/authenticate.js';
 import { UserModel as User } from '../models/user.model.js';
+import enviarMail from '../utils/nodemailer.js';
 
 const router = express.Router()
 /* -------------------------------------------------------------------------- */
@@ -40,7 +41,7 @@ router.post("/signup", (req, res, next) => {
               res.statusCode = 500;
               res.send(err);
             } else {
-              
+              enviarMail(user)
               res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
               res.send({ success: true, token });
             }
@@ -65,8 +66,9 @@ router.post("/login", passport.authenticate("local"), (req, res, next) => {
           res.statusCode = 500;
           res.send(err);
         } else {
+          console.log(user);
           res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
-          res.send({ success: true, token });
+          res.send({ success: true, token , admin: user.admin});
         }
       });
     },

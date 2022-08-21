@@ -1,8 +1,12 @@
-import Cookies from "universal-cookie";
-import axios from "axios";
-import React, { Fragment, useContext, useEffect } from "react";
-import { UserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import React, {
+  useContext,
+  useEffect,
+} from 'react';
+
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+import { UserContext } from '../context/UserContext';
 
 const CheckAuth = (props) => {
   const [userContext, setUserContext] = useContext(UserContext);
@@ -33,6 +37,7 @@ const CheckAuth = (props) => {
           }
         }).catch((error)=>{
           console.log(error);
+          localStorage.setItem("admin",false)
           console.log(navigate("/login"))
         });
   

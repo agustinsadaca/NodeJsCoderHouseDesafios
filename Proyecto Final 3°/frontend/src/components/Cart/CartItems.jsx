@@ -1,12 +1,24 @@
-import axios from "axios";
-import React from "react";
-import classes from "./Cart.module.css";
+import React from 'react';
+
+import axios from 'axios';
+
+import classes from './Cart.module.css';
 
 function CartItems(props) {
+
   const deleteCartItem = (params) => {
-    axios.delete(`http://localhost:8080/api/carrito/${props.idCarrito}`);
+    const storedUserLoggedInInformation = localStorage.getItem('token');
+    
+    axios.delete(`http://localhost:8080/api/shoppingcartproducts/${props.idProd}`,{
+      headers: {
+        Authorization: `Bearer ${storedUserLoggedInInformation}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+      withCredentials: true,
+    });
     props.onDelete((cart)=>{
-      const cartFiltered = cart.filter(item=>item.idCarrito!==props.idCarrito)
+      const cartFiltered = cart.productos.filter(item=>item._id!==props.idProd)
       return [...cartFiltered]
     });
   };
