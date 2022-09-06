@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import passportLocalMongoose from "passport-local-mongoose";
+import mongoose from 'mongoose';
+import passportLocalMongoose from 'passport-local-mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -30,6 +30,10 @@ const User = new Schema({
   refreshToken: {
     type: [Session],
   },
+  admin:{
+    type:Boolean,
+    default:false
+  }
 });
 
 //Remove refreshToken from the response

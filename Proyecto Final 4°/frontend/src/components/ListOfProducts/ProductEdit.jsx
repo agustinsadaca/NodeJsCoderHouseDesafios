@@ -1,65 +1,75 @@
 import React, { Component, useState } from "react";
 import Input from "../UI/Input";
-import classes from './ProductEdit.module.css'
-import axios from 'axios'
+import classes from "./ProductEdit.module.css";
+import axios from "axios";
+import dateFormat from '../Util/dateFormat.js'
 
 const ProductEdit = (props) => {
   const [productData, setproductData] = useState({
     timestamp: props.timestamp,
-    nombre: props.nombre,
+    name: props.name,
     fecha: props.fecha,
-    descripcion: props.descripcion,
-    codigo: props.codigo,
+    description: props.description,
+    code: props.code,
     foto: props.foto,
-    precio: props.precio,
+    price: props.price,
     stock: props.stock,
-   
-  })
+  });
   const handleDataChange = (event) => {
-    setproductData({...productData,[event.target.name]:event.target.value})
-  }
+    let valueInput = 0;
+    if (event.target.name === "timestamp") {
+      valueInput = event.target.value.toString();
+      const newDate = new dateFormat
+      valueInput = newDate.YYYYMMDDxDDMMYYYY(valueInput).getTime();
+      console.log(typeof(valueInput));
+     
+    } else {
+      valueInput = event.target.value;
+    }
+    setproductData({ ...productData, [event.target.name]: valueInput });
+  };
   const saveProducto = (params) => {
-    const res =  axios.put(`http://localhost:8080/api/productos/${props.id}`,{
-      "timestamp": productData.timestamp,
-      "nombre": productData.nombre,
-      "descripcion": productData.descripcion,
-      "codigo": productData.codigo,
-      "foto": productData.foto,
-      "precio": productData.precio,
-      "stock": productData.stock,
-      "admin":true
-    })
-  }
+    const res = axios.put(`http://localhost:8080/api/productos/${props.id}`, {
+      timestamp: productData.timestamp,
+      name: productData.name,
+      descripcion: productData.description,
+      code: productData.code,
+      image: productData.image,
+      price: productData.price,
+      stock: productData.stock,
+      admin: true,
+    });
+  };
   function format(date) {
     date = new Date(date);
-  
-    var day = ('0' + date.getDate()).slice(-2);
-    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+
+    var day = ("0" + date.getDate()).slice(-2);
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
     var year = date.getFullYear();
-  
-    return year + '-' + month + '-' + day;
+
+    return year + "-" + month + "-" + day;
   }
   return (
     <div className={classes.editModal}>
-      <form  onSubmit={saveProducto}>
+      <form onSubmit={saveProducto}>
         <Input
-          label="Nombre"
+          label="Name"
           input={{
-            id: "nombre_" + props.id,
+            id: "name_" + props.id,
             type: "text",
-            defaultValue:props.nombre,
-            onChange:handleDataChange,
-            name:'nombre'
+            defaultValue: props.name,
+            onChange: handleDataChange,
+            name: "name",
           }}
         ></Input>
         <Input
-          label="Descripcion"
+          label="description"
           input={{
-            id: "descripcion_" + props.id,
+            id: "description_" + props.id,
             type: "text",
-            defaultValue:props.descripcion,
-            onChange:handleDataChange,
-            name:'descripcion'
+            defaultValue: props.description,
+            onChange: handleDataChange,
+            name: "description",
           }}
         ></Input>
         <Input
@@ -67,39 +77,39 @@ const ProductEdit = (props) => {
           input={{
             id: "fecha_" + props.id,
             type: "date",
-            defaultValue:format(props.timestamp),
-            onChange:handleDataChange,
-            name:'fecha'
+            defaultValue: format(props.timestamp),
+            onChange: handleDataChange,
+            name: "timestamp",
           }}
         ></Input>
         <Input
-          label="Foto"
+          label="Image"
           input={{
-            id: "foto_" + props.id,
+            id: "image_" + props.id,
             type: "text",
-            defaultValue:props.foto,
-            onChange:handleDataChange,
-            name:'foto'
+            defaultValue: props.image,
+            onChange: handleDataChange,
+            name: "image",
           }}
         ></Input>
         <Input
-          label="Precio"
+          label="Price"
           input={{
-            id: "precio_" + props.id,
+            id: "price_" + props.id,
             type: "number",
-            defaultValue:props.precio,
-            onChange:handleDataChange,
-            name:'precio'
+            defaultValue: props.price,
+            onChange: handleDataChange,
+            name: "price",
           }}
         ></Input>
         <Input
-          label="Codigo"
+          label="Code"
           input={{
-            id: "codigo_" + props.id,
+            id: "code_" + props.id,
             type: "number",
-            defaultValue:props.codigo,
-            onChange:handleDataChange,
-            name:'codigo'
+            defaultValue: props.code,
+            onChange: handleDataChange,
+            name: "code",
           }}
         ></Input>
         <Input
@@ -107,9 +117,9 @@ const ProductEdit = (props) => {
           input={{
             id: "stock_" + props.id,
             type: "number",
-            defaultValue:props.stock,
-            onChange:handleDataChange,
-            name:'stock'
+            defaultValue: props.stock,
+            onChange: handleDataChange,
+            name: "stock",
           }}
         ></Input>
 
@@ -117,8 +127,8 @@ const ProductEdit = (props) => {
           <button className={classes["button--alt"]} onClick={props.onClose}>
             Close
           </button>
-       
-          <button type="submit" className={classes["button--alt"]} >
+
+          <button type="submit" className={classes["button--alt"]}>
             Guardar
           </button>
         </div>

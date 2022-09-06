@@ -26,11 +26,11 @@ const ProductAdd = (props) => {
   const saveProducto = (params) => {
     const res =  axios.post(`http://localhost:8080/api/productos`,{
       "timestamp": productData.timestamp,
-      "nombre": productData.nombre,
-      "descripcion": productData.descripcion,
-      "codigo": productData.codigo,
-      "foto": productData.foto,
-      "precio": productData.precio,
+      "name": productData.nombre,
+      "description": productData.descripcion,
+      "code": productData.codigo,
+      "image": productData.foto,
+      "price": productData.precio,
       "stock": productData.stock,
       "admin":true
     })

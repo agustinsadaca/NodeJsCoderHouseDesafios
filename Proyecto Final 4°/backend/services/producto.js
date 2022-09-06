@@ -30,11 +30,11 @@ class Producto {
   // readAll()
 
   async update(id,producto) {
-    const {timestamp, nombre, descripcion, codigo, foto, precio, stock} = producto
+    const {timestamp, name, description, code, image, price, stock} = producto
     try {
       const response = await ProductosModel.updateOne(
         { _id:id },
-        { timestamp:timestamp, nombre:nombre, descripcion:descripcion, codigo:codigo, foto:foto, precio:precio, stock:stock }
+        { timestamp:timestamp, name:name, description:description, code:code, image:image, price:price, stock:stock }
       );
       console.log(response);
       return 

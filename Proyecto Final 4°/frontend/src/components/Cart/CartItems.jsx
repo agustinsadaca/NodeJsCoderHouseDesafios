@@ -1,12 +1,24 @@
-import axios from "axios";
-import React from "react";
-import classes from "./Cart.module.css";
+import React from 'react';
+
+import axios from 'axios';
+
+import classes from './CartItems.module.css';
 
 function CartItems(props) {
+
   const deleteCartItem = (params) => {
-    axios.delete(`http://localhost:8080/api/carrito/${props.idCarrito}`);
+    const storedUserLoggedInInformation = localStorage.getItem('token');
+    
+    axios.delete(`http://localhost:8080/api/shoppingcartproducts/${props.idProd}`,{
+      headers: {
+        Authorization: `Bearer ${storedUserLoggedInInformation}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+      },
+      withCredentials: true,
+    });
     props.onDelete((cart)=>{
-      const cartFiltered = cart.filter(item=>item.idCarrito!==props.idCarrito)
+      const cartFiltered = cart.productos.filter(item=>item._id!==props.idProd)
       return [...cartFiltered]
     });
   };
@@ -14,22 +26,22 @@ function CartItems(props) {
   return (
     <tr>
       <td>
-        <p>{props.nombre}</p>
+        <p>{props.name}</p>
       </td>
       <td>
-        <p>{props.descripcion}</p>
+        <p>{props.description}</p>
       </td>
       <td>
         <p>{new Date(props.timestamp).toLocaleDateString("es-AR")}</p>
       </td>
-      <td className={classes.tdImg}>
-        <img src={props.foto} />
+      <td >
+        <img className={classes.tdImg} src={props.image} />
       </td>
       <td>
-        <p>{props.precio}</p>
+        <p>{props.price}</p>
       </td>
       <td>
-        <p>{props.codigo}</p>
+        <p>{props.code}</p>
       </td>
       <td>
         <p>{props.stock}</p>

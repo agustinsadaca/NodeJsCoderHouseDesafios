@@ -1,21 +1,21 @@
-import express from "express";
-import {UserModel as User}  from "../models/user.model.js";
-import passport from "passport";
-import jwt from "jsonwebtoken";
-import cookieParser from 'cookie-parser'
-
-const router = express.Router()
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
 
 import {
-  getToken,
   COOKIE_OPTIONS,
   getRefreshToken,
+  getToken,
   verifyUser,
-  
-} from "../middlewares/authenticate.js";
+} from '../middlewares/authenticate.js';
+import { UserModel as User } from '../models/user.model.js';
+import enviarMail from '../utils/nodemailer.js';
 
+const router = express.Router()
+/* -------------------------------------------------------------------------- */
+/*                                   Signup                                   */
+/* -------------------------------------------------------------------------- */
 router.post("/signup", (req, res, next) => {
-  // Verify that first name is not empty
   if (!req.body.firstName) {
     res.statusCode = 500;
     res.send({
@@ -41,6 +41,7 @@ router.post("/signup", (req, res, next) => {
               res.statusCode = 500;
               res.send(err);
             } else {
+              enviarMail(user)
               res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
               res.send({ success: true, token });
             }
@@ -50,7 +51,9 @@ router.post("/signup", (req, res, next) => {
     );
   }
 });
-
+/* -------------------------------------------------------------------------- */
+/*                                    Login                                   */
+/* -------------------------------------------------------------------------- */
 router.post("/login", passport.authenticate("local"), (req, res, next) => {
   const token = getToken({ _id: req.user._id });
   const refreshToken = getRefreshToken({ _id: req.user._id });
@@ -62,8 +65,9 @@ router.post("/login", passport.authenticate("local"), (req, res, next) => {
           res.statusCode = 500;
           res.send(err);
         } else {
+          console.log(user);
           res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
-          res.send({ success: true, token });
+          res.send({ success: true, token , admin: user.admin});
         }
       });
     },
@@ -85,7 +89,6 @@ router.post("/refreshToken", (req, res, next) => {
       User.findOne({ _id: userId }).then(
         (user) => {
           if (user) {
-            // Find the refresh token against the user record in database
             const tokenIndex = user.refreshToken.findIndex(
               (item) => item.refreshToken === refreshToken
             );
@@ -95,7 +98,6 @@ router.post("/refreshToken", (req, res, next) => {
               res.send("Unauthorized");
             } else {
               const token = getToken({ _id: userId });
-              // If the refresh token exists, then create new one and replace it.
               const newRefreshToken = getRefreshToken({ _id: userId });
               user.refreshToken[tokenIndex] = { refreshToken: newRefreshToken };
               user.save((err, user) => {

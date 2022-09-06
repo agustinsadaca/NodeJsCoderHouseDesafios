@@ -1,5 +1,8 @@
-import "../db.js";
-import { CarritoModel } from "../models/carrito.models.js";
+import '../db.js';
+import mongoose from "mongoose";
+
+
+import { CarritoModel } from '../models/carrito.models.js';
 
 /* -------------------------------------------------------------------------- */
 /*                                   Carrito                                  */
@@ -18,9 +21,9 @@ class Carrito {
 
   // createUser()
 
-  async readAll() {
+  async readAll(_id) {
     try {
-      const response = await CarritoModel.find();
+      const response = await CarritoModel.findOne({_id:_id});
       console.log(response);
       return(response);
     } catch (error) {
@@ -44,6 +47,21 @@ class Carrito {
       console.log(error);
     }
   }
+
+  async addProductToCart(data) {
+    const { _id,product} = data
+    try {
+      const response = await CarritoModel.updateOne(
+        { _id:_id },
+        {$push:{productos:product}}
+      )
+      
+      console.log(response);
+      return _id
+    } catch (error) {
+      console.log(error);
+    }
+  }
   // update()
 
   async readOne(id) {
@@ -56,12 +74,22 @@ class Carrito {
     }
   }
 
+  async readOneUser(user) {
+    try {
+      const response = await CarritoModel.findOne({ user:user });
+      console.log(response);
+      return response
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // readOne()
 
-  async deleteCarrito(id) {
+  async deleteCarrito(idCarrito,idProducto) {
     try {
-      const response = await CarritoModel.deleteOne({ _id:id });
-      console.log(response);
+      const response = await CarritoModel.updateOne({ _id:idCarrito },{$pop: { productos:{_id:mongoose.Types.ObjectId(idProducto)}} });
+      return response
     } catch (error) {
       console.log(error);
     }
