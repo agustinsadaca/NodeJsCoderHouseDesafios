@@ -1,0 +1,17 @@
+[
+  {
+    "idCarrito": 1,
+    "timestampCarrito": 1653266669013,
+    "productos": [
+      {
+        "timestamp": 1632182400,
+        "nombre": "Escuadra",
+        "descripcion": "Elemento de medicion",
+        "codigo": "15",
+        "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+        "precio": "15",
+        "stock": "15"
+      }
+    ]
+  }
+]
