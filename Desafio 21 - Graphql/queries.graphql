@@ -1,0 +1,24 @@
+mutation {
+  createProducto(datos: {
+   	"timestamp": 1631072864163,
+			"nombre": "reg",
+			"descripcion": "descripcion",
+			"codigo": 30,
+			"foto": "foto",
+			"precio": 20,
+			"stock": 60,
+    }
+  }) {
+    id
+  }
+}
+
+
+query {
+  getProductos {
+    id
+    nombre
+    
+  }
+}
+

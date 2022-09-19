@@ -7,6 +7,10 @@ import dotenv from "dotenv";
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
+import { graphqlMiddleware } from './middlewares/graphqlMiddleware'
+
+
+app.use('/graphql', graphqlMiddleware)
 
 dotenv.config();
 

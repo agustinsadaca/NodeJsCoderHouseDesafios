@@ -22,6 +22,8 @@
     "express-session": "^1.17.3",
     "moment": "^2.29.1",
     "mongoose": "^6.0.8",
-    "node-emoji": "^1.11.0"
+    "node-emoji": "^1.11.0",
+    "graphql": "^15.5.0",
+"express-graphql": "^0.12.0"
   }
 }
