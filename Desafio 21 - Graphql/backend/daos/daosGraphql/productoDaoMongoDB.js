@@ -1,4 +1,4 @@
-import Producto from "../../services/mongodb/producto.js"
+import Producto from "../../services/graphql/producto.js"
 
 class ProductoDaoArchivo extends Producto {
 
