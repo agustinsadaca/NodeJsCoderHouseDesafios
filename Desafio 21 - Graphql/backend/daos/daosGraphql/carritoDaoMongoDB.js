@@ -1,4 +1,4 @@
-import CarritoServicio from "../../services/mongodb/carrito.js"
+import CarritoServicio from "../../services/graphql/carrito.js"
 
 class CarritoDaoArchivo extends CarritoServicio {
 
