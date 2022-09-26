@@ -6,7 +6,6 @@ const Carrito = new Schema({
     type: Number,
     required: true,
   },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
   productos: [
     {
       _id: { type: Schema.Types.ObjectId, ref: "productos" },
@@ -39,6 +38,9 @@ const Carrito = new Schema({
       stock: {
         type: Number,
       },
+      amount: { 
+        type: Number, 
+        required: true },
     },
   ],
 });

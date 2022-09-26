@@ -1,5 +1,7 @@
 import "../db.js";
 import { ProductosModel } from "../models/productos.models.js";
+import { v4 as uuidv4 } from 'uuid';
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  Productos                                 */
@@ -8,8 +10,11 @@ class Producto {
   constructor() {}
   async createProducto(producto) {
     try {
-      const response = await ProductosModel.create(producto);
+      const id = uuidv4().replace(/-/g, "")
+      console.log(id);
+      const response = await ProductosModel.create({...producto,_id:id});
       console.log(response);
+      return response
     } catch (error) {
       console.log(error);
     }

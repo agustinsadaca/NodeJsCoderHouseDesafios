@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema({
-  timestamp: {
-    type: Number,
+  _id: {
+    type: String,
   },
   name: {
     type: String,
@@ -19,7 +19,6 @@ const Schema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
     max: 100,
   },
   price: {

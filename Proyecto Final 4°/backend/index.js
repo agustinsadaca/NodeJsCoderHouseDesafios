@@ -1,6 +1,3 @@
-import './strategies/JwtStrategy.js';
-import './strategies/LocalStrategy.js';
-import './middlewares/authenticate.js';
 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -9,17 +6,11 @@ import handlebars from 'express-handlebars';
 import session from 'express-session';
 import { createServer } from 'http';
 import os from 'os';
-import passport from 'passport';
 import path from 'path';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
-
+import {UserRoutes, UserLoginRoutes,ProductosRoute} from './routers/index.js' // CarritoRoute,InfoRouter,ProductosRoute
 import MessageRouter from './controllers/message.controller.js';
-import routerCarrito from './routers/carrito.route.js';
-import routerInfo from './routers/info.router.js';
-import routerProducto from './routers/productos.route.js';
-import random from './routers/random.route.js';
-import UserRouter from './routers/userRoutes.js';
 import logger from './utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -51,15 +42,15 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
-app.use("/user", UserRouter);
-app.use("/api/productos", routerProducto);
-app.use("/api/shoppingcartproducts", routerCarrito);
-app.use("/api/info", routerInfo);
-app.use("/api/random", random);
+app.use("/api/users", UserRoutes);
+app.use("/login", UserLoginRoutes);
+app.use("/api/products", ProductosRoute);
+// app.use("/api/shoppingcartproducts", CarritoRoute);
+// app.use("/api/info", InfoRouter);
 
 app.engine(
   "hbs",
