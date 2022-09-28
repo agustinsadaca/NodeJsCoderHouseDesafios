@@ -2,16 +2,17 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 const Carrito = new Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
   timestampCarrito: {
     type: Number,
     required: true,
   },
-  productos: [
+  prods: [
     {
-      _id: { type: Schema.Types.ObjectId, ref: "productos" },
-      timestamp: {
-        type: Number,
-      },
+      _id: { type: String },
       name: {
         type: String,
         required: true,
@@ -19,16 +20,15 @@ const Carrito = new Schema({
       },
       description: {
         type: String,
-        required: true,
+
         max: 100,
       },
       code: {
         type: Number,
-        required: true,
       },
       image: {
         type: String,
-        required: true,
+
         max: 100,
       },
       price: {
@@ -38,9 +38,10 @@ const Carrito = new Schema({
       stock: {
         type: Number,
       },
-      amount: { 
-        type: Number, 
-        required: true },
+      amount: {
+        type: Number,
+        required: true,
+      },
     },
   ],
 });

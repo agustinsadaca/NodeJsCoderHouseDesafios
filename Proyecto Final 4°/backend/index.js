@@ -9,7 +9,7 @@ import os from 'os';
 import path from 'path';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
-import {UserRoutes, UserLoginRoutes,ProductosRoute} from './routers/index.js' // CarritoRoute,InfoRouter,ProductosRoute
+import {UserRoutes, UserLoginRoutes,ProductosRoute,CarritoRoute,InfoRouter} from './routers/index.js' // CarritoRoute,InfoRouter,ProductosRoute
 import MessageRouter from './controllers/message.controller.js';
 import logger from './utils/logger.js';
 
@@ -49,8 +49,8 @@ app.use(
 app.use("/api/users", UserRoutes);
 app.use("/login", UserLoginRoutes);
 app.use("/api/products", ProductosRoute);
-// app.use("/api/shoppingcartproducts", CarritoRoute);
-// app.use("/api/info", InfoRouter);
+app.use("/api/shoppingcartproducts", CarritoRoute);
+app.use("/api/info", InfoRouter);
 
 app.engine(
   "hbs",

@@ -33,3 +33,4 @@
 [2022-09-25T17:38:38.245] [WARN] default - Ruta POST /api/products/1725f15b73e1-4e00-b5b5-49e4e17c2d60 no implementada
 [2022-09-25T17:38:51.698] [WARN] default - Ruta POST /api/products/35f8296f1460-4c7b-b63e-c3084ee28bb8 no implementada
 [2022-09-25T17:39:26.859] [WARN] default - Ruta POST /api/products/f350aafb397044bca5c3a2be1c1a882e no implementada
+[2022-09-27T23:15:20.314] [WARN] default - Ruta POST /api/shoppingcartproducts no implementada

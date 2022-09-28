@@ -1,6 +1,7 @@
 import Carrito from "../services/carrito.js";
 import Producto from "../services/producto.js";
 import mongoose from "mongoose";
+import { login } from "./auth.controller.js";
 export async function getCart(req, res) {
   const carrito = new Carrito();
   const carritoUser = await carrito.readOneUser(req.user.id);
@@ -15,18 +16,27 @@ export async function getCart(req, res) {
 export async function addProductToCart(req, res) {
   const { productId } = req.body;
   const product = new Producto();
-  const prod = await product.readOne(id);
+  const prod = await product.readOne(productId);
   if (!prod) {
-    res.status(400).json({message: "Product not found."});
+    res.status(400).json({ message: "Product not found." });
   }
+  const productJSON = prod.toJSON();
+  productJSON.amount = 1;
   const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user.id);
-  console.log(carrito);
+  const carrito = await cart.readOneUser(req.user._id);
   if (carrito) {
+    const indexProduct = carrito.prods.findIndex(
+      (element) => element._id === prod._id
+    );
+    if (indexProduct != -1) {
+      carrito.prods[indexProduct].amount += 1;
+    } else {
+      carrito.prods.push(productJSON);
+    }
     cart
       .addProductToCart({
         _id: carrito._id,
-        product: prod,
+        cart: carrito,
       })
       .then((maxId) => {
         res.send(maxId);
@@ -34,9 +44,9 @@ export async function addProductToCart(req, res) {
   } else {
     cart
       .createCarrito({
-        user: req.user.id,
+        _id: req.user._id,
         timestampCarrito: Date.now(),
-        productos: [prod],
+        prods: [productJSON],
       })
       .then((maxId) => {
         res.send(maxId);
@@ -44,15 +54,27 @@ export async function addProductToCart(req, res) {
   }
 }
 export async function deleteProductFromCart(req, res) {
-    const { id } = req.params;
+  const { id } = req.params;
+  const product = new Producto();
+  const prod = await product.readOne(id);
 
-    const producto = new Carrito();
-    const carrito = await producto.readOneUser(req.user.id);
-    let myObjectIdString =  mongoose.Types.ObjectId(id);
-    console.log(myObjectIdString);
-  
-    producto.deleteCarrito(carrito._id.toString(), id);
-    res.json({
-      ProductoConIdBorrado: id,
-    });
+  const cart = new Carrito();
+  const carrito = await cart.readOneUser(req.user._id);
+
+  const indexProduct = carrito.prods.findIndex(
+    (element) => element._id === prod._id
+  );
+  if (indexProduct === -1){
+    res.status(400).json({ message: "Product not found in cart." });
+  }
+  if ( carrito.prods[indexProduct].amount > 1) {
+    carrito.prods[indexProduct].amount -= 1;
+  } else {
+    carrito.prods.splice(indexProduct, 1);
+  }
+  console.log("carrito", carrito, "proddd", prod);
+  cart.deleteCarrito(carrito._id, carrito);
+  res.status(200).json({
+    ProductoConIdBorrado: id,
+  });
 }
