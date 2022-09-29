@@ -1,5 +1,7 @@
 import Carrito from "../services/carrito.js";
 import Producto from "../services/producto.js";
+import mongoose from "mongoose";
+import { login } from "./auth.controller.js";
 export async function getCart(req, res) {
   const carrito = new Carrito();
   const carritoUser = await carrito.readOneUser(req.user.id);

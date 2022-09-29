@@ -1,9 +1,6 @@
 import express from "express";
 
 import { isAuth } from "../middlewares/authenticate.js";
-import Carrito from "../services/carrito.js";
-import Producto from "../services/producto.js";
-import mongoose from "mongoose";
 import * as cartController from "../controllers/cart.controller.js";
 
 const routerCarrito = express.Router();

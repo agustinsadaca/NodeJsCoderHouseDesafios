@@ -1,23 +1,28 @@
-
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import express from 'express';
-import handlebars from 'express-handlebars';
-import session from 'express-session';
-import { createServer } from 'http';
-import os from 'os';
-import path from 'path';
-import { Server } from 'socket.io';
-import { fileURLToPath } from 'url';
-import {UserRoutes, UserLoginRoutes,ProductosRoute,CarritoRoute,InfoRouter} from './routers/index.js' // CarritoRoute,InfoRouter,ProductosRoute
-import MessageRouter from './controllers/message.controller.js';
-import logger from './utils/logger.js';
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import express from "express";
+import handlebars from "express-handlebars";
+import session from "express-session";
+import { createServer } from "http";
+import os from "os";
+import path from "path";
+import { Server } from "socket.io";
+import { fileURLToPath } from "url";
+import {
+  UserRoutes,
+  UserLoginRoutes,
+  ProductosRoute,
+  CarritoRoute,
+  InfoRouter,
+  OrdenesRoute
+} from "./routers/index.js"; 
+import MessageRouter from "./controllers/message.controller.js";
+import logger from "./utils/logger.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const nCpus = os.cpus().length;
-
 
 const app = express();
 app.use(express.json());
@@ -42,15 +47,12 @@ app.use(
   })
 );
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-
 app.use("/api/users", UserRoutes);
 app.use("/login", UserLoginRoutes);
 app.use("/api/products", ProductosRoute);
 app.use("/api/shoppingcartproducts", CarritoRoute);
 app.use("/api/info", InfoRouter);
+app.use("/api/orders", OrdenesRoute);
 
 app.engine(
   "hbs",
@@ -74,11 +76,11 @@ app.get("/info", (req, res) => {
     layout: "config",
   });
 });
-app.all('*', (req, res) => {
-  const { url, method } = req
-  logger.warn(`Ruta ${method} ${url} no implementada`)
-  res.send(`Ruta ${method} ${url} no está implementada`)
-})
+app.all("*", (req, res) => {
+  const { url, method } = req;
+  logger.warn(`Ruta ${method} ${url} no implementada`);
+  res.send(`Ruta ${method} ${url} no está implementada`);
+});
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -88,10 +90,7 @@ const io = new Server(httpServer, {
 const Message = new MessageRouter(io);
 const PORT = process.env.PORT;
 
-
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);
 });
-server.on('error', error => logger.error(`Error en servidor: ${error}`))
-
-
+server.on("error", (error) => logger.error(`Error en servidor: ${error}`));
