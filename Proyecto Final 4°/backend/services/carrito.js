@@ -106,6 +106,18 @@ class Carrito {
       console.log(error);
     }
   }
+  async emptyCart(idUser){
+    try {
+      const response = await CarritoModel.updateOne(
+        { _id: idUser },
+          {prods:[]}
+        // { $pop: { productos: { _id: mongoose.Types.ObjectId(idProducto) } } }
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default Carrito;

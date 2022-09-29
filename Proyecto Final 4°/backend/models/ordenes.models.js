@@ -47,4 +47,4 @@ const Orden = new Schema({
   ],
 });
 
-export const CarritoModel = mongoose.model("orden", Orden);
+export const OrdenModel = mongoose.model("orden", Orden);

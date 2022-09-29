@@ -6,7 +6,7 @@ const routerOrdenes = express.Router();
 
 routerOrdenes.get("/", isAuth, orderController.getCart);
 
-routerOrdenes.post("/", isAuth, orderController.addProductToCart);
+routerOrdenes.post("/", isAuth, orderController.createOrder);
 
 
 export default routerOrdenes;
