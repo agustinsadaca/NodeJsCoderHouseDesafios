@@ -14,20 +14,25 @@ import {
   ProductosRoute,
   CarritoRoute,
   InfoRouter,
-  OrdenesRoute
+  OrdenesRoute,
+  ImagesRoutes
 } from "./routers/index.js"; 
 import MessageRouter from "./controllers/message.controller.js";
 import logger from "./utils/logger.js";
+import bodyParser from "body-parser"
+// import "./routers/imagenes.route.js"
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const nCpus = os.cpus().length;
-
 const app = express();
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(express.static("public"));
+
 const corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200,
@@ -53,6 +58,7 @@ app.use("/api/products", ProductosRoute);
 app.use("/api/shoppingcartproducts", CarritoRoute);
 app.use("/api/info", InfoRouter);
 app.use("/api/orders", OrdenesRoute);
+app.use("/api/images", ImagesRoutes);
 
 app.engine(
   "hbs",
@@ -62,7 +68,6 @@ app.engine(
     layoutsDir: __dirname + "/views",
   })
 );
-app.use(express.static("public"));
 app.set("views", "./backend/views");
 app.set("view engine", "hbs");
 app.get("/", (req, res) => {

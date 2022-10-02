@@ -7,7 +7,7 @@ const router = express.Router()
 /* -------------------------------------------------------------------------- */
 /*                                   Signup                                   */
 /* -------------------------------------------------------------------------- */
-router.post('/',isAuth,UserController.createUser)
+router.post('/',UserController.createUser)
 
 
 export default router

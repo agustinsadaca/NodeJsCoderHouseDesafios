@@ -34,3 +34,10 @@
 [2022-09-25T17:38:51.698] [WARN] default - Ruta POST /api/products/35f8296f1460-4c7b-b63e-c3084ee28bb8 no implementada
 [2022-09-25T17:39:26.859] [WARN] default - Ruta POST /api/products/f350aafb397044bca5c3a2be1c1a882e no implementada
 [2022-09-27T23:15:20.314] [WARN] default - Ruta POST /api/shoppingcartproducts no implementada
+[2022-10-02T00:31:12.726] [WARN] default - Ruta GET /uploads/1664681456033-space-galaxy-vertical-portrait-display-wallpaper-preview.jpg no implementada
+[2022-10-02T00:31:12.925] [WARN] default - Ruta GET /favicon.ico no implementada
+[2022-10-02T00:31:37.335] [WARN] default - Ruta GET /1664681456033-space-galaxy-vertical-portrait-display-wallpaper-preview.jpg no implementada
+[2022-10-02T00:31:37.389] [WARN] default - Ruta GET /favicon.ico no implementada
+[2022-10-02T00:37:21.091] [WARN] default - Ruta GET /uploads/1664681456033-space-galaxy-vertical-portrait-display-wallpaper-preview.jpg no implementada
+[2022-10-02T00:39:43.230] [WARN] default - Ruta GET /uploads/1664681456033-space-galaxy-vertical-portrait-display-wallpaper-preview.jpg no implementada
+[2022-10-02T00:42:47.381] [WARN] default - Ruta GET /uploads/1664681456033-space-galaxy-vertical-portrait-display-wallpaper-preview.jpg no implementada
