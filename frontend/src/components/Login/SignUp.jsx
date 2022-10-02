@@ -24,10 +24,12 @@ const SignUp = (props) => {
   const sendRegistro = (event) => {
     event.preventDefault()
     console.log(userData);
-    const res =  axios.post(`http://localhost:8080/signup?username=${userData.user}&password=${userData.password}`,{
+    const res =  axios.post(`http://localhost:8080/user/signup`,{
     "email":userData.email,
     "firstName":userData.firstName,
-    "lastName":userData.lastName
+    "lastName":userData.lastName,
+    "username":userData.user,
+    "password":userData.password
     }).then(response=>{
       response.status==204 ? setIsSignedUp(true) :setIsSignedUp(false) 
     })

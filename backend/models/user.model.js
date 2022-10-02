@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import passportLocalMongoose from "passport-local-mongoose";
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -11,34 +10,40 @@ const Session = new Schema({
 });
 
 const User = new Schema({
-  firstName: {
+  _id: {
+    type: String,
+  },
+  email: {
     type: String,
     default: "",
+    required: true,
+  },
+  password: {
+    type: String,
+    default: "",
+    required: true,
+  },
+  name: {
+    type: String,
+    default: "",
+    required: true,
   },
   lastName: {
     type: String,
     default: "",
   },
-  authStrategy: {
-    type: String,
-    default: "local",
-  },
-  points: {
+  phone:{
     type: Number,
-    default: 50,
   },
-  refreshToken: {
-    type: [Session],
+  image: {
+    type: String,
+    default: "",
+    
   },
+  admin:{
+    type:Boolean,
+    default:false
+  }
 });
 
-//Remove refreshToken from the response
-User.set("toJSON", {
-  transform: function (doc, ret, options) {
-    delete ret.refreshToken;
-    return ret;
-  },
-});
-
-User.plugin(passportLocalMongoose);
 export const UserModel = mongoose.model("User", User);

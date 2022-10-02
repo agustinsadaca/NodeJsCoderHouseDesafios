@@ -1,34 +1,54 @@
-import axios from "axios";
-import React, { Fragment,useState,useEffect} from "react";
-import Card from "../UI/Card";
-import CartItems from "./CartItems";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import axios from 'axios';
+
+import Card from '../UI/Card';
+import CartItems from './CartItems';
 
 function Cart(props) {
   const [cartItems, setcartItems] = useState([]);
   const [loading, setloading] = useState(false);
   useEffect(() => {
     setloading(true);
-    axios.get("http://localhost:8080/api/carrito").then((response) => {
-      setcartItems(response.data);
-      setloading(false);
-    });
+    const storedUserLoggedInInformation = localStorage.getItem("token");
+
+    axios
+      .get("http://localhost:8080/api/shoppingcartproducts", {
+        headers: {
+          Authorization: `Bearer ${storedUserLoggedInInformation}`,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:8080",
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        setcartItems(response.data);
+        console.log(response.data);
+        if (typeof response.data === "string") {
+          setloading(true);
+        } else {
+          setloading(false);
+        }
+      });
   }, [setcartItems]);
 
   let listP;
-  if (cartItems.length !== 0) {
-    listP = cartItems.map((cartItem) => (
+  if (cartItems.length !== 0 && typeof cartItems !== "string") {
+    listP = cartItems.productos.map((cartItem) => (
       <Card>
         <CartItems
           onDelete={setcartItems}
           key={cartItem._id}
-          idCarrito={cartItem._id}
-          timestampCarrito={cartItem.timestampCarrito}
-          descripcion={cartItem.producto.descripcion}
-          foto={cartItem.producto.foto}
-          precio={cartItem.producto.precio}
-          stock={cartItem.producto.stock}
-          codigo={cartItem.producto.codigo}
-          nombre={cartItem.producto.nombre}
+          idProd={cartItem._id}
+          description={cartItem.description}
+          image={cartItem.image}
+          price={cartItem.price}
+          stock={cartItem.stock}
+          code={cartItem.code}
+          name={cartItem.name}
         ></CartItems>
       </Card>
     ));

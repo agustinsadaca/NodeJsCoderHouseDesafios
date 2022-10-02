@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Websocket</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+  <table class="u-full-width">
+  <thead>
+    <tr>
+      <th>Argumentos de entrada</th>
+      <th>Nombre de la plataforma</th>
+      <th>Version de node.js</th>
+      <th>Memoria total reservada</th>
+      <th>Path de ejecucion</th>
+      <th>Process id</th>
+      <th>Carpeta del proyecto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="args"></td>
+      <td id="plataforma"></td>
+      <td id="version"></td>
+      <td id="memoria"></td>
+      <td id="path"></td>
+      <td id="pid"></td>
+      <td id="carpetaProyecto"></td>
+     
+    </tr>
+  
+  </tbody>
+</table>
+
+</body>
+<script>
+  let configInfo = fetch('http://localhost:8080/api/info')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("args").innerHTML = `${data.argumentoEntrada}`
+    document.getElementById("plataforma").innerHTML = `${data.nombrePlataforma}`
+    document.getElementById("version").innerHTML = `${data.version}`
+    document.getElementById("memoria").innerHTML = `${data.memoria.rss}`
+    document.getElementById("path").innerHTML = `${data.pathEjecucion}`
+    document.getElementById("pid").innerHTML = `${data.pid}`
+    document.getElementById("carpetaProyecto").innerHTML = `${data.carpetaProyecto}`
+    
+  })
+
+
+</script>

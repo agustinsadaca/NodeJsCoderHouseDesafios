@@ -1,14 +1,23 @@
 import "../db.js";
 import { UserModel } from "../models/user.model.js";
+import { v4 as uuidv4 } from 'uuid';
+
 
 /* -------------------------------------------------------------------------- */
-/*                                  Productos                                 */
+/*                                  User                                 */
 /* -------------------------------------------------------------------------- */
 class User {
   constructor() {}
   async createUser(user) {
     try {
-      const response = await UserModel.create(user);
+      const id = uuidv4().replace(/-/g, "")
+
+      if (user.email.includes("admin")){
+        user.admin = true
+      }else{
+        user.admin = false
+      }
+      const response = await UserModel.create({...user,_id:id});
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -47,6 +56,15 @@ class User {
   async readOne(id) {
     try {
       const response = await UserModel.findOne({ _id:id });
+      console.log(response);
+      return response
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async readOneByEmail(email) {
+    try {
+      const response = await UserModel.findOne({ email:email });
       console.log(response);
       return response
     } catch (error) {

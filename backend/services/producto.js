@@ -1,5 +1,7 @@
 import "../db.js";
 import { ProductosModel } from "../models/productos.models.js";
+import { v4 as uuidv4 } from 'uuid';
+
 
 /* -------------------------------------------------------------------------- */
 /*                                  Productos                                 */
@@ -8,8 +10,11 @@ class Producto {
   constructor() {}
   async createProducto(producto) {
     try {
-      const response = await ProductosModel.create(producto);
+      const id = uuidv4().replace(/-/g, "")
+      console.log(id);
+      const response = await ProductosModel.create({...producto,_id:id});
       console.log(response);
+      return response
     } catch (error) {
       console.log(error);
     }
@@ -30,11 +35,11 @@ class Producto {
   // readAll()
 
   async update(id,producto) {
-    const {timestamp, nombre, descripcion, codigo, foto, precio, stock} = producto
+    const {timestamp, name, description, code, image, price, stock} = producto
     try {
       const response = await ProductosModel.updateOne(
         { _id:id },
-        { timestamp:timestamp, nombre:nombre, descripcion:descripcion, codigo:codigo, foto:foto, precio:precio, stock:stock }
+        { timestamp:timestamp, name:name, description:description, code:code, image:image, price:price, stock:stock }
       );
       console.log(response);
       return 

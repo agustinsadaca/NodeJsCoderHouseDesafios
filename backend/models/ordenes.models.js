@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
-const Carrito = new Schema({
+const Orden = new Schema({
   _id: {
     type: String,
     required: true,
   },
-  timestampCarrito: {
-    type: Number,
+  idCliente: {
+    type: String,
     required: true,
+  },
+  fecha: {
+    type: Date,
+    required: true,
+    default: Date.now,
   },
   prods: [
     {
@@ -20,16 +25,12 @@ const Carrito = new Schema({
       },
       description: {
         type: String,
-
-        max: 100,
       },
       code: {
         type: Number,
       },
       image: {
         type: String,
-
-        max: 100,
       },
       price: {
         type: Number,
@@ -46,4 +47,4 @@ const Carrito = new Schema({
   ],
 });
 
-export const CarritoModel = mongoose.model("carrito", Carrito);
+export const OrdenModel = mongoose.model("orden", Orden);

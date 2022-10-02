@@ -1,18 +1,24 @@
-import ItemProducto from "./ItemProducto";
-import ProductAdd from "./ProductAdd";
-import Card from "../UI/Card";
-import Modal from "../UI/Modal";
-import classes from "./ListOfProducts.module.css";
+import {
+  Fragment,
+  useEffect,
+  useState,
+} from 'react';
 
-import { useState, useEffect, Fragment } from "react";
+import Card from '../UI/Card';
+import Modal from '../UI/Modal';
+import ItemProducto from './ItemProducto';
+import classes from './ListOfProducts.module.css';
+import ProductAdd from './ProductAdd';
+
 const axios = require("axios");
 
 const ListOfProducts = (props) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addProductsVisibility, setaddProductsVisibility] = useState(false);
-
+  
   useEffect(() => {
+    
     setLoading(true);
     axios
       .get("http://localhost:8080/api/productos", {
@@ -31,17 +37,17 @@ const ListOfProducts = (props) => {
   let listP;
   if (products.length !== 0) {
     listP = products.map((prod) => (
-      <Card>
+      <Card key={Math.random()}>
         <ItemProducto
           key={prod._id}
           id={prod._id}
           timestamp={prod.timestamp}
-          descripcion={prod.descripcion}
-          foto={prod.foto}
-          precio={prod.precio}
+          description={prod.description}
+          image={prod.image}
+          price={prod.price}
           stock={prod.stock}
-          codigo={prod.codigo}
-          nombre={prod.nombre}
+          code={prod.code}
+          name={prod.name}
         ></ItemProducto>
       </Card>
     ));
@@ -56,8 +62,8 @@ const ListOfProducts = (props) => {
   return (
     <div>
       <h1>Productos</h1>
-      <button className={classes.boton} onClick={showAddProduct}>Agregar Productos</button>
-      {addProductsVisibility ? (
+{   localStorage.getItem("admin") === "true" ? ( <button className={classes.boton} onClick={showAddProduct}>Agregar Productos</button>): (Fragment)
+}      {addProductsVisibility ? (
         <Modal onClose={hideAddModal}>
             <ProductAdd
               onClose={hideAddModal}

@@ -1,5 +1,5 @@
-import { createTransport } from "nodemailer";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import { createTransport } from 'nodemailer';
 
 function enviarMail(user) {
   
@@ -14,8 +14,8 @@ const transporter = createTransport({
 });
 
 const mailOptions = {
-  from: "no-reply@c2140416.ferozo.com",
-  to: ["no-reply@c2140416.ferozo.com",user.email],
+  from: process.env.GMAIL_USER,
+  to: [process.env.GMAIL_USER,user.email],
   subject: "Nueva subscripcion",
   html: `<h1>Nueva subscripcion ecommerce CoderHouse, usuario ${user.username}, ${user.firstName}, ${user.lastName}</h1>`,
   
@@ -30,30 +30,30 @@ async function sendMailEthereal() {
   }
 }
 
-sendMailEthereal();
+// sendMailEthereal();
 
 /* ---------------------------------- GMAIL --------------------------------- */
 
-// const transporterGmail = createTransport({
-//   service: "gmail",
-//   port: 587,
-//   auth: {
-//     user: "diegoff@gmail.com",
-//     pass: "oukzwglwrkovrnki",
-//   },
-// });
+const transporterGmail = createTransport({
+  service: "gmail",
+  port: 587,
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASSWORD,
+  },
+});
 
-// async function sendMailGmail() {
-//   try {
-//     const response = await transporterGmail.sendMail(mailOptions);
-//     console.log(response);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+async function sendMailGmail() {
+  try {
+    const response = await transporterGmail.sendMail(mailOptions);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// sendMailGmail();
+sendMailGmail();
 
  }
 
-export default {enviarMail};
+export default enviarMail;
