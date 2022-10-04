@@ -39,7 +39,7 @@ export async function updateProduct(req, res) {
   const { id } = req.params;
   if (req.user.admin) {
     const producto = new Producto();
-    producto
+    const responseProduct = await producto
       .update(id, {
         name,
         description,
@@ -51,7 +51,7 @@ export async function updateProduct(req, res) {
       .catch((error) => res.json({error: error})
       );
       return res.json({
-        idProductoEditado: id,
+        responseProduct
       })
       
   } else {
@@ -65,9 +65,9 @@ export async function deleteProduct(req, res) {
     const { id } = req.params;
     if (req.user.admin) {
       const producto = new Producto();
-      producto.deleteProducto(id);
+      const responseDelete = await producto.deleteProducto(id);
       return  res.json({
-        ProductoConIdBorrado: id,
+        responseDelete
       });
     } else {
       return  res.send({
