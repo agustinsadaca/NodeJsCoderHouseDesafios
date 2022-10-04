@@ -93,7 +93,7 @@ const io = new Server(httpServer, {
   },
 });
 const Message = new MessageRouter(io);
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);

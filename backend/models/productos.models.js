@@ -11,7 +11,6 @@ const Schema = mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
     max: 100,
   },
   code: {
@@ -23,7 +22,6 @@ const Schema = mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true,
   },
   stock: {
     type: Number,

@@ -26,7 +26,6 @@ const User = new Schema({
   name: {
     type: String,
     default: "",
-    required: true,
   },
   lastName: {
     type: String,
