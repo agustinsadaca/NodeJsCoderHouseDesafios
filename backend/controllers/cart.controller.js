@@ -37,8 +37,8 @@ export async function addProductToCart(req, res) {
         _id: carrito._id,
         cart: carrito,
       })
-      .then((maxId) => {
-        res.send(maxId);
+      .then((response) => {
+        res.send(response);
       });
   } else {
     cart
@@ -47,8 +47,8 @@ export async function addProductToCart(req, res) {
         timestampCarrito: Date.now(),
         prods: [productJSON],
       })
-      .then((maxId) => {
-        res.send(maxId);
+      .then((response) => {
+        res.send(response);
       });
   }
 }
@@ -56,10 +56,14 @@ export async function deleteProductFromCart(req, res) {
   const { id } = req.params;
   const product = new Producto();
   const prod = await product.readOne(id);
-
+  if (!prod) {
+    return res.status(400).json({ message: "Product not found." });
+  }
   const cart = new Carrito();
   const carrito = await cart.readOneUser(req.user._id);
-
+  if (!carrito) {
+    return res.status(400).json({ message: "Cart not found." });
+  }
   const indexProduct = carrito.prods.findIndex(
     (element) => element._id === prod._id
   );
@@ -71,9 +75,6 @@ export async function deleteProductFromCart(req, res) {
   } else {
     carrito.prods.splice(indexProduct, 1);
   }
-  console.log("carrito", carrito, "proddd", prod);
-  cart.deleteCarrito(carrito._id, carrito);
-  res.status(200).json({
-    ProductoConIdBorrado: id,
-  });
+  const responseDelete = await cart.deleteCarrito(carrito._id, carrito);
+  res.status(200).json(responseDelete);
 }

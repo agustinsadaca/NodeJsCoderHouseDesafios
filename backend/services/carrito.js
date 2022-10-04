@@ -63,11 +63,9 @@ class Carrito {
     const { _id, cart } = data;
     try {
       const response = await CarritoModel.updateOne({ _id: _id }, cart);
-
-      console.log(response);
-      return _id;
+      return response;
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
   // update()
@@ -103,7 +101,8 @@ class Carrito {
       );
       return response;
     } catch (error) {
-      console.log(error);
+      return error;
+
     }
   }
   async emptyCart(idUser){
