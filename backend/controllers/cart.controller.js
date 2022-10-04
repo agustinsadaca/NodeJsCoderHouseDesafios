@@ -5,7 +5,7 @@ export async function getCart(req, res) {
   const carrito = new Carrito();
   const carritoUser = await carrito.readOneUser(req.user.id);
   if (!carritoUser) {
-    res.send("Su carrito no posee productos");
+    return res.send("Su carrito no posee productos");
   } else {
     carrito.readAll(carritoUser._id).then((obj) => {
       res.send(obj);
@@ -17,7 +17,7 @@ export async function addProductToCart(req, res) {
   const product = new Producto();
   const prod = await product.readOne(productId);
   if (!prod) {
-    res.status(400).json({ message: "Product not found." });
+    return res.status(400).json({ message: "Product not found." });
   }
   const productJSON = prod.toJSON();
   productJSON.amount = 1;
@@ -64,7 +64,7 @@ export async function deleteProductFromCart(req, res) {
     (element) => element._id === prod._id
   );
   if (indexProduct === -1){
-    res.status(400).json({ message: "Product not found in cart." });
+    return res.status(400).json({ message: "Product not found in cart." });
   }
   if ( carrito.prods[indexProduct].amount > 1) {
     carrito.prods[indexProduct].amount -= 1;

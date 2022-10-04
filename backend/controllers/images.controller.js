@@ -12,7 +12,6 @@ console.log(file);
     error.httpStatusCode = 400;
     return res.send(`error: ${error}`);
   }
-  // res.sendFile(file.path.replace('\\', '/'))
   res.send(`Archivo ${file.originalname} subido exitosamente link:${'http://' + hostname+'/api/images/'+file.filename}`);
 }
 export function getImage(req, res) {

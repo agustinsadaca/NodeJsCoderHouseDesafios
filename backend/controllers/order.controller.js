@@ -6,10 +6,9 @@ export async function getCart(req, res) {
   const orden = new Orden();
   const ordenes= await orden.readOrdersUser(req.user._id);
   if (!ordenes) {
-    res.status(200).send("No se encontraron ordenes");
+    return res.status(200).send("No se encontraron ordenes");
   } else {
-   
-    res.status(200).send(ordenes);
+    return res.status(200).send(ordenes);
   }
 }
 export async function createOrder(req, res) {
@@ -21,9 +20,9 @@ export async function createOrder(req, res) {
     console.log("aqui", carrito);
     const createOrder = await orden.createOrden(carrito)
     cart.emptyCart(req.user._id)
-    res.status(200).send(createOrder);
+    return res.status(200).send(createOrder);
   }else{
-    res.status(200).send({message:"El carrito se encuentra vacío"});
+    return res.status(200).send({message:"El carrito se encuentra vacío"});
 
   }
  
@@ -40,7 +39,7 @@ export async function deleteProductFromCart(req, res) {
     (element) => element._id === prod._id
   );
   if (indexProduct === -1){
-    res.status(400).json({ message: "Product not found in cart." });
+    return res.status(400).json({ message: "Product not found in cart." });
   }
   if ( carrito.prods[indexProduct].amount > 1) {
     carrito.prods[indexProduct].amount -= 1;

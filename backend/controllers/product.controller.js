@@ -50,12 +50,12 @@ export async function updateProduct(req, res) {
       })
       .catch((error) => res.json({error: error})
       );
-      res.json({
+      return res.json({
         idProductoEditado: id,
       })
       
   } else {
-    res.send({
+    return res.send({
       error: -2,
       descripcion: "ruta api/productos método put/update no autorizada",
     });
@@ -66,11 +66,11 @@ export async function deleteProduct(req, res) {
     if (req.user.admin) {
       const producto = new Producto();
       producto.deleteProducto(id);
-      res.json({
+      return  res.json({
         ProductoConIdBorrado: id,
       });
     } else {
-      res.send({
+      return  res.send({
         error: -3,
         descripcion: "ruta api/productos método delete no autorizada",
       });
