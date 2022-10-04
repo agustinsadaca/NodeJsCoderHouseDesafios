@@ -18,9 +18,12 @@ class User {
         user.admin = false
       }
       const response = await UserModel.create({...user,_id:id});
+      console.log("aq");
       console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
+      return error
     }
   }
 
@@ -69,6 +72,7 @@ class User {
       return response
     } catch (error) {
       console.log(error);
+      return  error
     }
   }
 

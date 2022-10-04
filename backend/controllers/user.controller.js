@@ -16,7 +16,8 @@ export async function createUser(req, res) {
   body.password = password
   try {
     const response = await newUserService.createUser(body)
-    res.status(200).json(response)
+    console.log(typeof(response));
+    res.status(200).json(JSON.stringify(response));
   } catch (error) {
     res.status(400).send(error.message)
   }
