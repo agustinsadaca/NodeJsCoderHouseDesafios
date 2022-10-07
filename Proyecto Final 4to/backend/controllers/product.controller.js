@@ -9,9 +9,12 @@ export async function getAllProducts(req, res) {
 export async function getProductById(req, res) {
   const { id } = req.params;
   const producto = new Producto();
-  producto.readOne(id).then((obj) => {
-    res.send(obj);
-  });
+  const responseProduct = await producto.readOne(id)
+  if(responseProduct){
+  res.status(200).json(responseProduct);
+  }else{
+  res.status(200).json({message:"Product not found"});
+  }
 }
 export async function createProduct(req, res) {
   const { name, description, code, image, price, stock, admin } = req.body;
@@ -39,7 +42,7 @@ export async function updateProduct(req, res) {
   const { id } = req.params;
   if (req.user.admin) {
     const producto = new Producto();
-    producto
+    const responseProduct = await producto
       .update(id, {
         name,
         description,
@@ -50,12 +53,12 @@ export async function updateProduct(req, res) {
       })
       .catch((error) => res.json({error: error})
       );
-      res.json({
-        idProductoEditado: id,
+      return res.json({
+        responseProduct
       })
       
   } else {
-    res.send({
+    return res.send({
       error: -2,
       descripcion: "ruta api/productos método put/update no autorizada",
     });
@@ -65,12 +68,12 @@ export async function deleteProduct(req, res) {
     const { id } = req.params;
     if (req.user.admin) {
       const producto = new Producto();
-      producto.deleteProducto(id);
-      res.json({
-        ProductoConIdBorrado: id,
+      const responseDelete = await producto.deleteProducto(id);
+      return  res.json({
+        responseDelete
       });
     } else {
-      res.send({
+      return  res.send({
         error: -3,
         descripcion: "ruta api/productos método delete no autorizada",
       });

@@ -34,14 +34,12 @@ const Orden = new Schema({
       },
       price: {
         type: Number,
-        required: true,
       },
       stock: {
         type: Number,
       },
       amount: {
         type: Number,
-        required: true,
       },
     },
   ],

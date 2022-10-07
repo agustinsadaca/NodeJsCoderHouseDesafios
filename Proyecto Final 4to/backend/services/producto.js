@@ -41,10 +41,11 @@ class Producto {
         { _id:id },
         { timestamp:timestamp, name:name, description:description, code:code, image:image, price:price, stock:stock }
       );
-      console.log(response);
-      return 
+      
+      return response
     } catch (error) {
       console.log(error);
+      return error
     }
   }
   // update()
@@ -64,9 +65,9 @@ class Producto {
   async deleteProducto(id) {
     try {
       const response = await ProductosModel.deleteOne({ _id:id });
-      console.log(response);
+      return response
     } catch (error) {
-      console.log(error);
+      return error  
     }
   }
 

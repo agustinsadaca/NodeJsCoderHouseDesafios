@@ -3,9 +3,9 @@ import Producto from "../services/producto.js";
 
 export async function getCart(req, res) {
   const carrito = new Carrito();
-  const carritoUser = await carrito.readOneUser(req.user.id);
+  const carritoUser = await carrito.readOne(req.user._id);
   if (!carritoUser) {
-    res.send("Su carrito no posee productos");
+    return res.send("Su carrito no posee productos");
   } else {
     carrito.readAll(carritoUser._id).then((obj) => {
       res.send(obj);
@@ -17,12 +17,12 @@ export async function addProductToCart(req, res) {
   const product = new Producto();
   const prod = await product.readOne(productId);
   if (!prod) {
-    res.status(400).json({ message: "Product not found." });
+    return res.status(400).json({ message: "Product not found." });
   }
   const productJSON = prod.toJSON();
   productJSON.amount = 1;
   const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user._id);
+  const carrito = await cart.readOne(req.user._id);
   if (carrito) {
     const indexProduct = carrito.prods.findIndex(
       (element) => element._id === prod._id
@@ -37,8 +37,8 @@ export async function addProductToCart(req, res) {
         _id: carrito._id,
         cart: carrito,
       })
-      .then((maxId) => {
-        res.send(maxId);
+      .then((response) => {
+        res.send(response);
       });
   } else {
     cart
@@ -47,8 +47,8 @@ export async function addProductToCart(req, res) {
         timestampCarrito: Date.now(),
         prods: [productJSON],
       })
-      .then((maxId) => {
-        res.send(maxId);
+      .then((response) => {
+        res.send(response);
       });
   }
 }
@@ -56,24 +56,25 @@ export async function deleteProductFromCart(req, res) {
   const { id } = req.params;
   const product = new Producto();
   const prod = await product.readOne(id);
-
+  if (!prod) {
+    return res.status(400).json({ message: "Product not found." });
+  }
   const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user._id);
-
+  const carrito = await cart.readOne(req.user._id);
+  if (!carrito) {
+    return res.status(400).json({ message: "Cart not found." });
+  }
   const indexProduct = carrito.prods.findIndex(
     (element) => element._id === prod._id
   );
   if (indexProduct === -1){
-    res.status(400).json({ message: "Product not found in cart." });
+    return res.status(400).json({ message: "Product not found in cart." });
   }
   if ( carrito.prods[indexProduct].amount > 1) {
     carrito.prods[indexProduct].amount -= 1;
   } else {
     carrito.prods.splice(indexProduct, 1);
   }
-  console.log("carrito", carrito, "proddd", prod);
-  cart.deleteCarrito(carrito._id, carrito);
-  res.status(200).json({
-    ProductoConIdBorrado: id,
-  });
+  const responseDelete = await cart.deleteCarrito(carrito._id, carrito);
+  res.status(200).json(responseDelete);
 }

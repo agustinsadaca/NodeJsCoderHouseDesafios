@@ -44,9 +44,9 @@ class Message {
   }
   // update()
 
-  async readOne(field, value) {
+  async readOne( value) {
     try {
-      const response = await MessageModel.findOne({ field:value});
+      const response = await MessageModel.findOne({ email:value});
       console.log(response);
       return response
     } catch (error) {

@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import User from '../services/user.js'
 import dotenv from 'dotenv';
+import enviarMail from "../utils/nodemailer.js";
+
 
 dotenv.config();
 
@@ -16,8 +18,19 @@ export async function createUser(req, res) {
   body.password = password
   try {
     const response = await newUserService.createUser(body)
-    res.status(200).json(response)
+    const html = `<h1> Usuario creado, email ${body.email} <h1/>`
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: [process.env.GMAIL_USER,body.email],
+      subject: "Usuario creado",
+      html: html,
+      
+    };
+    
+    enviarMail(mailOptions)
+    console.log(typeof(response));
+    return res.status(200).json(JSON.stringify(response));
   } catch (error) {
-    res.status(400).send(error.message)
+    return res.status(400).send(error.message)
   }
 }

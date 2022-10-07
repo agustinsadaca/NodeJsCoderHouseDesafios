@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { createTransport } from 'nodemailer';
 
-function enviarMail(user) {
+function enviarMail(mailOptions) {
   
 dotenv.config();
 const transporter = createTransport({
@@ -13,24 +13,18 @@ const transporter = createTransport({
   },
 });
 
-const mailOptions = {
-  from: process.env.GMAIL_USER,
-  to: [process.env.GMAIL_USER,user.email],
-  subject: "Nueva subscripcion",
-  html: `<h1>Nueva subscripcion ecommerce CoderHouse, usuario ${user.username}, ${user.firstName}, ${user.lastName}</h1>`,
-  
-};
 
-async function sendMailEthereal() {
-  try {
-    const response = await transporter.sendMail(mailOptions);
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-}
 
-// sendMailEthereal();
+// async function sendMailEthereal() {
+//   try {
+//     const response = await transporter.sendMail(mailOptions);
+//     console.log(response);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// // sendMailEthereal();
 
 /* ---------------------------------- GMAIL --------------------------------- */
 

@@ -4,7 +4,6 @@ import express from "express";
 import handlebars from "express-handlebars";
 import session from "express-session";
 import { createServer } from "http";
-import os from "os";
 import path from "path";
 import { Server } from "socket.io";
 import { fileURLToPath } from "url";
@@ -93,7 +92,7 @@ const io = new Server(httpServer, {
   },
 });
 const Message = new MessageRouter(io);
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 const server = httpServer.listen(PORT, () => {
   console.log(`Servidor express corriendo en port ${PORT}`);

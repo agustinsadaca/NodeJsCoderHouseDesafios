@@ -1,55 +1,69 @@
 import Carrito from "../services/carrito.js";
 import Orden from "../services/orden.js";
-import Producto from "../services/producto.js";
-
-export async function getCart(req, res) {
+import enviarMail from "../utils/nodemailer.js";
+export async function getOrders(req, res) {
   const orden = new Orden();
   const ordenes= await orden.readOrdersUser(req.user._id);
   if (!ordenes) {
-    res.status(200).send("No se encontraron ordenes");
+    return res.status(200).send("Orders not found");
   } else {
-   
-    res.status(200).send(ordenes);
+    return res.status(200).send(ordenes);
   }
 }
 export async function createOrder(req, res) {
 
   const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user._id);
+  let carrito = await cart.readOne(req.user._id);
   if(carrito && carrito.prods.length > 0){
+    carrito = carrito.toJSON()
     const orden = new Orden();
-    console.log("aqui", carrito);
     const createOrder = await orden.createOrden(carrito)
+    
     cart.emptyCart(req.user._id)
-    res.status(200).send(createOrder);
+
+    let html = `<table class="u-full-width">
+    <thead>
+      <tr>
+        <th>Nombre Cliente ${req.user.name}</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>Nombre Producto</th>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${carrito.prods.map(producto=>{
+        return `<tr>
+        <td>${producto.name}</td>
+        <td>${producto.description}</td>
+        <td>${producto.price}</td>
+        <td>${producto.amount}</td>
+      </tr>`
+
+      })}
+      
+    </tbody>
+  </table>`
+    carrito
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: [process.env.GMAIL_USER,req.user.email],
+      subject: "Orden Creada",
+      html: html,
+      
+    };
+    
+    enviarMail(mailOptions)
+
+
+    return res.status(200).send(createOrder);
   }else{
-    res.status(200).send({message:"El carrito se encuentra vacío"});
-
+    return res.status(200).send({message:"The cart is empty"});
   }
- 
 }
-export async function deleteProductFromCart(req, res) {
-  const { id } = req.params;
-  const product = new Producto();
-  const prod = await product.readOne(id);
 
-  const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user._id);
-
-  const indexProduct = carrito.prods.findIndex(
-    (element) => element._id === prod._id
-  );
-  if (indexProduct === -1){
-    res.status(400).json({ message: "Product not found in cart." });
-  }
-  if ( carrito.prods[indexProduct].amount > 1) {
-    carrito.prods[indexProduct].amount -= 1;
-  } else {
-    carrito.prods.splice(indexProduct, 1);
-  }
-  console.log("carrito", carrito, "proddd", prod);
-  cart.deleteCarrito(carrito._id, carrito);
-  res.status(200).json({
-    ProductoConIdBorrado: id,
-  });
-}

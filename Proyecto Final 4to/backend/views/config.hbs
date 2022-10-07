@@ -49,9 +49,10 @@
 
 </body>
 <script>
-  let configInfo = fetch('http://localhost:8080/api/info')
+  let configInfo = fetch('http://coderhousecommerce1.herokuapp.com/api/info')
   .then(response => response.json())
   .then(data => {
+    console.log(data)
     document.getElementById("args").innerHTML = `${data.argumentoEntrada}`
     document.getElementById("plataforma").innerHTML = `${data.nombrePlataforma}`
     document.getElementById("version").innerHTML = `${data.version}`
