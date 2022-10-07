@@ -3,60 +3,70 @@ git subtree push --prefix "Proyecto Final 4°"  heroku master
 heroku logs --tail 
 # NodeJsCoderHouseDesafios
 
-https://coderhousecommerce1.herokuapp.com/api/productos
+Dominio:http://coderhousecommerce1.herokuapp.com/
+usuarios ejemplo: 
+-No admin: agustin2@gmail.com pass 1234
+-Admin: admin@gmail.com pass 1234
 
-POST 
+## imagenes (para usuarios y productos)
+- POST /api/images: 
+ejemplo: body-form(seleccione archivo) -> devuelve link imagen
 
-body:
+## usuarios
+- POST /api/users: registra un nuevo usuario:
+
+ej body - json:
 {
-    "timestamp": 1631072864163,
-    "nombre": "regla",
-    "descripcion": "elemento de medicion",
-    "codigo": 1515,
-    "foto": "https://cdn1.iconfinder.com/data/icons/education-filled-outline-8/64/Education-Filled_2-512.png",
-    "precio": 17,
-    "stock": 18
+    "email": "agustin2@gmail.com",
+    "password": "1234",
+    "name": "agus",
+    "lastname": "fritscsh",
+    "phone": "+541144441234",
+    "image":"http://coderhousecommerce1.herokuapp.com/api/images/1665174757239-space-galaxy-vertical-portrait-display-wallpaper-preview.jpg"
 }
-
-GET  
-https://coderhousecommerce1.herokuapp.com/api/productos/:id individuales
-o
-https://coderhousecommerce1.herokuapp.com/api/productos todos
-
-PUT:
-https://coderhousecommerce1.herokuapp.com/api/productos/:idproducto
-
-DELETE:
-https://coderhousecommerce1.herokuapp.com/api/productos/:idproducto
-
--------------------
-
-https://coderhousecommerce1.herokuapp.com/api/carrito
-
-POST 
-
-body:
+## autenticacion
+- POST /login: autentica a un usuario devuelve jwt
+ej body - json:
 {
-		"timestampCarrito":1631072864163,
-		"producto":{
-			"timestamp": 1631072864163,
-			"nombre": "reg",
-			"descripcion": "descripcion",
-			"codigo": "codigo",
-			"foto": "foto",
-			"precio": 20,
-			"stock": 30
-	}}
+    "email": "agustin2@gmail.com",
+    "password": "1234"
+}
+Authentication: Auth - bearer 
 
-GET  
-https://coderhousecommerce1.herokuapp.com/api/carrito/:id individuales
-o
-https://coderhousecommerce1.herokuapp.com/api/carrito todos
+## productos
+Authentication: Auth - bearer 
+- GET /api/products: devuelve todos los productos (requiere JWT)
+- GET /api/products/{id}: devuelve un producto segun id (requiere JWT)
+- POST /api/products: crea un producto (REQUIERE JWT de usuario admin)
+ {
+    "name": "Pencil",
+    "description": "Pencil",
+    "image": "https://cdn2.iconfinder.com/data/icons/flat-pack-1/64/Pencil-512.png",
+    "price": 1500
+ }
+- PUT /api/products/{id}: actualiza un producto segun su id (REQUIERE JWT de usuario admin)
+ej body - json:
+{
+    "name": "test1",
+    "description": "Producto test",
+    "price": 130,
+    "image": "{{IMAGE_URL_3}}"
+}
+- DELETE /api/products/{id}: borra un producto segun su id (REQUIERE JWT de usuario admin)
 
-PUT:
-https://coderhousecommerce1.herokuapp.com/api/carrito/:idcarrito
+[ el nombre de usuario del admin se puede HARDCODEAR en el archivo config ]
 
-DELETE:
-https://coderhousecommerce1.herokuapp.com/api/carrito/:idcarrito
+## carritos
 
+- GET /api/shoppingcartproducts: devuelve los productos de un carrito (solo usuarios registrados) (requiere JWT)
+- POST /api/shoppingcartproducts: agrega producto al carrito segun su id (solo usuarios registrados) (requiere JWT)
+ejemplo
+{
+    "productId": "76e0157c93ed4b7fb9754c876c323a1c"
+}
+- DELETE /api/shoppingcartproducts/{id}: quita un producto de un carrito (solo usuarios registrados)
+
+## ordenes
+- POST /api/orders: crea una nueva orden (compra todo el contenido de un carrito y lo vacía envia mail, solo usuarios registrados) (requiere JWT)
+- GET /api/orders: devuelve todas las ordenes de un usuario (solo usuarios registrados) (requiere JWT)
 
