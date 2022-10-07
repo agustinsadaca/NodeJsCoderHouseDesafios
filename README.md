@@ -3,6 +3,8 @@ git subtree push --prefix "Proyecto Final 4°"  heroku master
 heroku logs --tail 
 # NodeJsCoderHouseDesafios
 
+thunder-collection en Proyecto final 4°
+
 Dominio:http://coderhousecommerce1.herokuapp.com/  
 usuarios ejemplo:  
 -No admin: agustin2@gmail.com pass 1234  
