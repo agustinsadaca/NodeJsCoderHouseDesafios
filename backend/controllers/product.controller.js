@@ -9,9 +9,12 @@ export async function getAllProducts(req, res) {
 export async function getProductById(req, res) {
   const { id } = req.params;
   const producto = new Producto();
-  producto.readOne(id).then((obj) => {
-    res.send(obj);
-  });
+  const responseProduct = await producto.readOne(id)
+  if(responseProduct){
+  res.status(200).json(responseProduct);
+  }else{
+  res.status(200).json({message:"Product not found"});
+  }
 }
 export async function createProduct(req, res) {
   const { name, description, code, image, price, stock, admin } = req.body;

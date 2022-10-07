@@ -11,7 +11,6 @@ class Orden {
   async createOrden(carrito) {
     try {
       const id = uuidv4().replace(/-/g, "")
-      carrito = carrito.toJSON();
       carrito.idCliente = carrito._id
       carrito._id = id
       console.log("order",carrito);

@@ -3,7 +3,7 @@ import Producto from "../services/producto.js";
 
 export async function getCart(req, res) {
   const carrito = new Carrito();
-  const carritoUser = await carrito.readOneUser(req.user.id);
+  const carritoUser = await carrito.readOne(req.user._id);
   if (!carritoUser) {
     return res.send("Su carrito no posee productos");
   } else {
@@ -22,7 +22,7 @@ export async function addProductToCart(req, res) {
   const productJSON = prod.toJSON();
   productJSON.amount = 1;
   const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user._id);
+  const carrito = await cart.readOne(req.user._id);
   if (carrito) {
     const indexProduct = carrito.prods.findIndex(
       (element) => element._id === prod._id
@@ -60,7 +60,7 @@ export async function deleteProductFromCart(req, res) {
     return res.status(400).json({ message: "Product not found." });
   }
   const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user._id);
+  const carrito = await cart.readOne(req.user._id);
   if (!carrito) {
     return res.status(400).json({ message: "Cart not found." });
   }

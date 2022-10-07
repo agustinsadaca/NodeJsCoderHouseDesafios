@@ -13,10 +13,13 @@ export async function getOrders(req, res) {
 export async function createOrder(req, res) {
 
   const cart = new Carrito();
-  const carrito = await cart.readOneUser(req.user._id);
+  let carrito = await cart.readOne(req.user._id);
   if(carrito && carrito.prods.length > 0){
+    carrito = carrito.toJSON()
     const orden = new Orden();
     const createOrder = await orden.createOrden(carrito)
+    
+    cart.emptyCart(req.user._id)
 
     let html = `<table class="u-full-width">
     <thead>
@@ -57,7 +60,6 @@ export async function createOrder(req, res) {
     
     enviarMail(mailOptions)
 
-    cart.emptyCart(req.user._id)
 
     return res.status(200).send(createOrder);
   }else{
