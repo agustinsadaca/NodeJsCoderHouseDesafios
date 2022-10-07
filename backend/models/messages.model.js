@@ -1,30 +1,20 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema({
-	
-		timestamp_message: {
-			type: Number,
-			required: true,
-		
-		},
-		email: {
-			type: String,
-			required: true,
-			max: 100,
-		},
-		messages: {
-			message:{
-			type: String,
-			required: true,
-			max: 100,
-		}},
-		id_user:{
-			type: Number,
-			required: true,
-			max: 100,
-		}
-})
+  timestamp_message: {
+    type: Number,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    max: 100,
+  },
+  message: {
+    type: String,
+    required: true,
+    max: 100,
+  },
+});
 
-
-
-export const MessageModel = mongoose.model('message', Schema)
+export const MessageModel = mongoose.model("message", Schema);

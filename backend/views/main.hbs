@@ -13,8 +13,17 @@
 
 </head>
 <body>
-  
-  <h1>Server Coderhouse Backend</h1>
+  <h1>Chat</h1>
+    <fieldset class="chat">
+      <input placeholder="E-mail" class="form-control" type="text" name="user" id="user">
+      <input placeholder="Mensaje" class="form-control" type="text" name="message" id="message">
+      <button id='send'>Enviar</button>
+    </fieldset>
+    <fieldset>
+      <ul id='messages'>
+
+      </ul>
+    </fieldset>
 
 </body>
 <script>
@@ -26,13 +35,16 @@
     socket.emit('messageFront', {'user':user.value,'message':message.value})
   })
   socket.on('messageBackend',(data)=>{
-    data = JSON.parse(data)
+    console.log(data)
     let inner=''
+
     data.map((message)=>{
+    var date = new Date(message.timestamp_message );
+    
       inner+=`
         <li class="listaMensaje">
           <div class="email text">  ${message.email} </div>
-          <div class="date text">  [${message.date}]:</div>
+          <div class="date text">  [${date}]:</div>
           <div class="message text">  ${message.message}</div>
         </li>
       `
