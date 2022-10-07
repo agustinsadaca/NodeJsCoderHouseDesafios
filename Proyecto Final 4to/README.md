@@ -9,7 +9,10 @@ Dominio:http://coderhousecommerce1.herokuapp.com/
 usuarios ejemplo:  
 -No admin: agustin2@gmail.com pass 1234  
 -Admin: admin@gmail.com pass 1234  
-
+## Mensajes 
+http://coderhousecommerce1.herokuapp.com/  
+## ServerInfo
+http://coderhousecommerce1.herokuapp.com/info  
 ## imagenes (para usuarios y productos)
 - POST /api/images:   
 ejemplo: body-form(seleccione archivo) -> devuelve link imagen  
